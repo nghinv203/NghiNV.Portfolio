@@ -1,0 +1,62 @@
+<section class="experience" [id]="sectionIds.experience">
+  <div class="experience__wrap">
+    <app-section-header [title]="'experience.title' | transloco" />
+
+    @switch (state().status) {
+      @case ('loading') {
+        <ol class="timeline">
+          @for (row of skeletonRows; track $index) {
+            <li class="timeline__item">
+              <app-skeleton variant="text" width="40%" />
+              <app-skeleton variant="text" width="25%" />
+              <app-skeleton variant="text" width="90%" />
+              <app-skeleton variant="text" width="80%" />
+            </li>
+          }
+        </ol>
+      }
+      @case ('empty') {
+        <app-empty-state />
+      }
+      @case ('error') {
+        <app-error-state [canRetry]="false" />
+      }
+      @default {
+        <ol class="timeline">
+          @for (exp of state().data; track exp.id) {
+            <li class="timeline__item">
+              <div class="timeline__head">
+                <h3 class="timeline__role">{{ exp.role | localize: lang() }}</h3>
+                <span class="timeline__dates">
+                  {{ exp.startDate | monthYear: lang() }} –
+                  {{ exp.endDate | monthYear: lang() : ('experience.present' | transloco) }}
+                </span>
+              </div>
+              <p class="timeline__company">
+                @if (exp.companyUrl) {
+                  <a [href]="exp.companyUrl" target="_blank" rel="noopener">{{ exp.company }}</a>
+                } @else {
+                  {{ exp.company }}
+                }
+                @if (exp.location) {
+                  <span class="timeline__location">· {{ exp.location }}</span>
+                }
+              </p>
+              <p class="timeline__summary">{{ exp.summary | localize: lang() }}</p>
+              <ul class="timeline__highlights" role="list">
+                @for (highlight of exp.highlights; track $index) {
+                  <li>{{ highlight | localize: lang() }}</li>
+                }
+              </ul>
+              <ul class="timeline__tech" role="list">
+                @for (tech of exp.techStack; track tech) {
+                  <li class="timeline__tech-item">{{ tech }}</li>
+                }
+              </ul>
+            </li>
+          }
+        </ol>
+      }
+    }
+  </div>
+</section>

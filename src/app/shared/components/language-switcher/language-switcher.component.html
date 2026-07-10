@@ -1,0 +1,14 @@
+<div class="switcher" role="group" [attr.aria-label]="'a11y.selectLanguage' | transloco">
+  @for (opt of options; track opt.code) {
+    <button
+      type="button"
+      class="switcher__btn"
+      [class.is-active]="language.lang() === opt.code"
+      [attr.aria-pressed]="language.lang() === opt.code"
+      [attr.aria-label]="'lang.' + opt.code | transloco"
+      (click)="language.use(opt.code)"
+    >
+      {{ opt.short }}
+    </button>
+  }
+</div>

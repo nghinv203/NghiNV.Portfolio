@@ -1,0 +1,69 @@
+<section class="about" [id]="sectionIds.about">
+  <div class="about__wrap">
+    <app-section-header [title]="'about.title' | transloco" />
+
+    <div class="about__grid">
+      <!-- Bio + stats -->
+      <div class="about__main">
+        @switch (profile().status) {
+          @case ('loading') {
+            <app-skeleton variant="text" width="95%" />
+            <app-skeleton variant="text" width="90%" />
+            <app-skeleton variant="text" width="70%" />
+          }
+          @default {
+            @if (profile().data; as p) {
+              <p class="about__bio">{{ p.bio | localize: lang() }}</p>
+              <dl class="about__stats">
+                <div class="about__stat">
+                  <dt>{{ 'about.yearsLabel' | transloco }}</dt>
+                  <dd>{{ p.yearsOfExperience }}+</dd>
+                </div>
+                <div class="about__stat">
+                  <dt>{{ 'about.locationLabel' | transloco }}</dt>
+                  <dd>{{ p.location }}</dd>
+                </div>
+              </dl>
+            }
+          }
+        }
+      </div>
+
+      <!-- Education + certificates -->
+      <aside class="about__aside">
+        <div class="about__block">
+          <h3 class="about__block-title">{{ 'nav.about' | transloco }} · Education</h3>
+          @if (education().data; as items) {
+            <ul class="about__list" role="list">
+              @for (edu of items; track edu.id) {
+                <li class="about__item">
+                  <strong>{{ edu.degree | localize: lang() }} — {{ edu.field | localize: lang() }}</strong>
+                  <span>{{ edu.school }}</span>
+                  <span class="about__muted">{{ edu.startYear }} – {{ edu.endYear ?? '' }}</span>
+                </li>
+              }
+            </ul>
+          } @else {
+            <app-skeleton variant="text" width="80%" />
+          }
+        </div>
+
+        <div class="about__block">
+          <h3 class="about__block-title">Certificates</h3>
+          @if (certificates().data; as items) {
+            <ul class="about__list" role="list">
+              @for (cert of items; track cert.id) {
+                <li class="about__item">
+                  <strong>{{ cert.name }}</strong>
+                  <span class="about__muted">{{ cert.issuer }}</span>
+                </li>
+              }
+            </ul>
+          } @else {
+            <app-skeleton variant="text" width="80%" />
+          }
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>

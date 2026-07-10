@@ -1,59 +1,59 @@
-# NghiNVPortfolio
+# NghiNV Portfolio
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.8.
+Personal developer portfolio for **Nguyen Van Nghi**, built with **Angular 19 (standalone) + SSR**.
+Currently frontend-only with a **mock API layer** designed to be swapped for a real backend with minimal change.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- **SSR** (Node/Express via `@angular/ssr`) — server-rendered per request for SEO and fast first paint.
+- **Light / dark theme** — follows the OS by default, manual toggle, remembered across visits (localStorage + cookie for SSR). No flash of wrong theme.
+- **3 languages** (VI / EN / JP) with **Transloco** — auto-detects the browser language, falls back to English, remembered across visits, switchable at runtime without a rebuild.
+- **Mock API layer** — every dynamic value flows through a service → `mockBackendInterceptor`. Simulated latency, error and empty states. Flip one flag to use a real backend.
+- **Skeleton loading**, empty and error states for every data-driven section.
+- Sections: Hero, About (+ education & certificates), Skills, Experience, Projects (+ detail pages), Contact form.
+- SEO: per-route title/meta/Open Graph/Twitter + JSON-LD, `robots.txt`, `sitemap.xml`.
+- Accessible: semantic landmarks, skip link, focus-visible rings, keyboard navigation, `prefers-reduced-motion`.
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Getting started
 
 ```bash
-ng generate --help
+npm install
+npm start            # dev server with SSR at http://localhost:4200
 ```
 
-## Building
-
-To build the project run:
+Build and run the production SSR server:
 
 ```bash
-ng build
+npm run build
+node dist/nghi-nv.portfolio/server/server.mjs   # serves http://localhost:4000
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Project structure
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
+```
+src/
+  app/
+    core/         # singletons: services (theme, language, seo, profile store, api),
+                  # interceptors (mock-backend, error), DI tokens, constants, utils
+    shared/       # reusable presentational components + pipes (icon, skeleton,
+                  # states, cards, section-header, theme/language controls, localize)
+    layouts/      # main-layout (header, nav, footer)
+    features/     # home (+ sections), projects (detail), not-found
+    models/       # typed domain models + LocalizedString
+    mock/         # mock data (from CV) + fake backend router
+  environments/   # environment flags (useMock, apiBaseUrl, mockDelayMs)
+  styles/         # design tokens, themes, mixins, reset, typography, buttons
+  server.ts       # Express SSR entry (provides cookie/lang/origin to the app)
+public/i18n/      # vi.json / en.json / ja.json
 ```
 
-## Running end-to-end tests
+## Editing content
 
-For end-to-end (e2e) testing, run:
+All portfolio content lives in `src/app/mock/data/*.ts` (typed against `src/app/models`).
+UI chrome text (nav, labels, states) lives in `public/i18n/{vi,en,ja}.json`.
 
-```bash
-ng e2e
-```
+## Switching to a real backend
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+See [docs/BACKEND.md](docs/BACKEND.md). In short: implement the REST endpoints the
+`PortfolioApiService` already calls, then set `useMock: false` in the environment.
+No component changes required.

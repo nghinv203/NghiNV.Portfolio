@@ -1,0 +1,87 @@
+{
+  "nav": {
+    "home": "Trang chủ",
+    "about": "Giới thiệu",
+    "skills": "Kỹ năng",
+    "experience": "Kinh nghiệm",
+    "projects": "Dự án",
+    "contact": "Liên hệ"
+  },
+  "a11y": {
+    "toggleTheme": "Chuyển giao diện sáng/tối",
+    "selectLanguage": "Chọn ngôn ngữ",
+    "openMenu": "Mở menu",
+    "closeMenu": "Đóng menu",
+    "skipToContent": "Bỏ qua tới nội dung"
+  },
+  "lang": {
+    "vi": "Tiếng Việt",
+    "en": "English",
+    "ja": "日本語"
+  },
+  "hero": {
+    "greeting": "Xin chào, tôi là",
+    "cta": "Liên hệ với tôi",
+    "secondaryCta": "Xem dự án",
+    "downloadCv": "Tải CV"
+  },
+  "about": {
+    "title": "Về tôi",
+    "yearsLabel": "Năm kinh nghiệm",
+    "locationLabel": "Đang ở"
+  },
+  "skills": {
+    "title": "Kỹ năng & công nghệ",
+    "subtitle": "Các công cụ và công nghệ tôi sử dụng",
+    "categories": {
+      "language": "Ngôn ngữ",
+      "framework": "Framework",
+      "platform": "Nền tảng & Cơ sở dữ liệu",
+      "tooling": "Công cụ",
+      "soft": "Nguyên lý"
+    }
+  },
+  "experience": {
+    "title": "Kinh nghiệm làm việc",
+    "present": "Hiện tại"
+  },
+  "projects": {
+    "title": "Dự án nổi bật",
+    "subtitle": "Một số sản phẩm tôi đã xây dựng",
+    "viewAll": "Xem tất cả dự án",
+    "viewProject": "Xem dự án",
+    "liveDemo": "Bản demo",
+    "sourceCode": "Mã nguồn",
+    "backToProjects": "Quay lại danh sách dự án",
+    "techLabel": "Công nghệ sử dụng"
+  },
+  "contact": {
+    "title": "Liên hệ",
+    "subtitle": "Bạn có dự án hay chỉ muốn chào hỏi?",
+    "name": "Họ tên",
+    "email": "Email",
+    "message": "Nội dung",
+    "send": "Gửi tin nhắn",
+    "sending": "Đang gửi…",
+    "success": "Cảm ơn bạn! Tin nhắn đã được gửi.",
+    "error": "Đã có lỗi xảy ra. Vui lòng thử lại.",
+    "required": "Trường này là bắt buộc.",
+    "invalidEmail": "Vui lòng nhập email hợp lệ."
+  },
+  "footer": {
+    "rights": "Bảo lưu mọi quyền.",
+    "builtWith": "Xây dựng bằng Angular"
+  },
+  "state": {
+    "loading": "Đang tải…",
+    "empty": "Chưa có nội dung.",
+    "errorTitle": "Không thể tải nội dung",
+    "errorBody": "Đã xảy ra lỗi khi tải dữ liệu.",
+    "retry": "Thử lại"
+  },
+  "notFound": {
+    "title": "Không tìm thấy trang",
+    "body": "Trang bạn tìm không tồn tại.",
+    "home": "Về trang chủ"
+  }
+}

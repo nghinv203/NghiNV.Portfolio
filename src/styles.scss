@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+// Global styles entry point.
+// Order matters: tokens -> themes -> reset -> typography.
+@use 'styles/tokens';
+@use 'styles/themes';
+@use 'styles/reset';
+@use 'styles/typography';
+@use 'styles/buttons';
+
+// Shared shimmer keyframe for skeleton loading states (used by SkeletonComponent).
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}

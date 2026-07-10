@@ -1,0 +1,70 @@
+<section class="hero" [id]="sectionIds.hero">
+  <div class="hero__inner">
+    @switch (state().status) {
+      @case ('loading') {
+        <div class="hero__content">
+          <app-skeleton variant="text" width="30%" />
+          <app-skeleton variant="text" width="70%" height="2.5rem" />
+          <app-skeleton variant="text" width="50%" height="2.5rem" />
+          <app-skeleton variant="text" width="90%" />
+          <app-skeleton variant="text" width="80%" />
+        </div>
+        <app-skeleton variant="circle" width="200px" height="200px" />
+      }
+      @case ('error') {
+        <p class="hero__error">{{ 'state.errorBody' | transloco }}</p>
+      }
+      @default {
+        @if (state().data; as profile) {
+          <div class="hero__content">
+            <p class="hero__greeting">{{ 'hero.greeting' | transloco }}</p>
+            <h1 class="hero__name">{{ profile.fullName }}</h1>
+            <p class="hero__title">{{ profile.title | localize: lang() }}</p>
+            <p class="hero__bio">{{ profile.bio | localize: lang() }}</p>
+
+            <div class="hero__actions">
+              <a class="btn btn--primary" routerLink="/" [fragment]="sectionIds.contact">
+                {{ 'hero.cta' | transloco }}
+              </a>
+              <a class="btn btn--ghost" routerLink="/" [fragment]="sectionIds.projects">
+                {{ 'hero.secondaryCta' | transloco }}
+              </a>
+              @if (profile.resumeUrl) {
+                <a class="btn btn--link" [href]="profile.resumeUrl" target="_blank" rel="noopener">
+                  <app-icon name="download" [size]="18" />
+                  {{ 'hero.downloadCv' | transloco }}
+                </a>
+              }
+            </div>
+
+            <ul class="hero__socials" role="list">
+              @for (social of profile.socials; track social.url) {
+                <li>
+                  <a
+                    [href]="social.url"
+                    [attr.aria-label]="social.platform"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <app-icon [name]="social.icon" [size]="20" />
+                  </a>
+                </li>
+              }
+            </ul>
+          </div>
+
+          <div class="hero__avatar-wrap">
+            <img
+              class="hero__avatar"
+              [src]="profile.avatarUrl"
+              [alt]="profile.fullName"
+              width="200"
+              height="200"
+              fetchpriority="high"
+            />
+          </div>
+        }
+      }
+    }
+  </div>
+</section>

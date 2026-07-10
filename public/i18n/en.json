@@ -1,0 +1,87 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "skills": "Skills",
+    "experience": "Experience",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "a11y": {
+    "toggleTheme": "Toggle light/dark theme",
+    "selectLanguage": "Select language",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "skipToContent": "Skip to content"
+  },
+  "lang": {
+    "vi": "Tiếng Việt",
+    "en": "English",
+    "ja": "日本語"
+  },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "cta": "Get in touch",
+    "secondaryCta": "View projects",
+    "downloadCv": "Download CV"
+  },
+  "about": {
+    "title": "About me",
+    "yearsLabel": "Years of experience",
+    "locationLabel": "Based in"
+  },
+  "skills": {
+    "title": "Skills & tech stack",
+    "subtitle": "Tools and technologies I work with",
+    "categories": {
+      "language": "Languages",
+      "framework": "Frameworks",
+      "platform": "Platforms & Databases",
+      "tooling": "Tools",
+      "soft": "Practices"
+    }
+  },
+  "experience": {
+    "title": "Work experience",
+    "present": "Present"
+  },
+  "projects": {
+    "title": "Featured projects",
+    "subtitle": "A selection of things I've built",
+    "viewAll": "View all projects",
+    "viewProject": "View project",
+    "liveDemo": "Live demo",
+    "sourceCode": "Source code",
+    "backToProjects": "Back to projects",
+    "techLabel": "Built with"
+  },
+  "contact": {
+    "title": "Get in touch",
+    "subtitle": "Have a project in mind or just want to say hi?",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send message",
+    "sending": "Sending…",
+    "success": "Thanks! Your message has been sent.",
+    "error": "Something went wrong. Please try again.",
+    "required": "This field is required.",
+    "invalidEmail": "Please enter a valid email address."
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "builtWith": "Built with Angular"
+  },
+  "state": {
+    "loading": "Loading…",
+    "empty": "Nothing here yet.",
+    "errorTitle": "Couldn't load this content",
+    "errorBody": "An error occurred while fetching data.",
+    "retry": "Try again"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "The page you're looking for doesn't exist.",
+    "home": "Back to home"
+  }
+}

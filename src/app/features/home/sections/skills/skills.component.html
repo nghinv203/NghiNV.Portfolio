@@ -1,0 +1,45 @@
+<section class="skills" [id]="sectionIds.skills">
+  <div class="skills__wrap">
+    <app-section-header
+      [title]="'skills.title' | transloco"
+      [subtitle]="'skills.subtitle' | transloco"
+    />
+
+    @switch (state().status) {
+      @case ('loading') {
+        <div class="skills__groups">
+          @for (row of skeletonRows; track $index) {
+            <div class="skills__group">
+              <app-skeleton variant="text" width="30%" />
+              <div class="skills__tags">
+                @for (chip of skeletonRows; track $index) {
+                  <app-skeleton width="80px" height="2rem" radius="var(--radius-full)" />
+                }
+              </div>
+            </div>
+          }
+        </div>
+      }
+      @case ('empty') {
+        <app-empty-state />
+      }
+      @case ('error') {
+        <app-error-state [canRetry]="false" />
+      }
+      @default {
+        <div class="skills__groups">
+          @for (group of groups(); track group.category) {
+            <div class="skills__group">
+              <h3 class="skills__group-title">{{ group.labelKey | transloco }}</h3>
+              <ul class="skills__tags" role="list">
+                @for (skill of group.items; track skill.id) {
+                  <li class="skills__tag" [class.is-featured]="skill.featured">{{ skill.name }}</li>
+                }
+              </ul>
+            </div>
+          }
+        </div>
+      }
+    }
+  </div>
+</section>

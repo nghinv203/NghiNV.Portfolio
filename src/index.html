@@ -2,10 +2,53 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>NghiNVPortfolio</title>
+  <title>NghiNV — Software Engineer</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Portfolio of Nguyen Van Nghi, a software developer working with .NET, Angular and Vue.">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Structured data for search engines -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Nguyen Van Nghi",
+    "jobTitle": "Software Developer",
+    "email": "mailto:vannghibg03@gmail.com",
+    "address": { "@type": "PostalAddress", "addressLocality": "Hanoi", "addressCountry": "VN" },
+    "sameAs": [
+      "https://github.com/nghinv203",
+      "https://linkedin.com/in/nghinv"
+    ],
+    "knowsAbout": ["C#", ".NET", "ASP.NET", "Angular", "Vue.js", "Golang", "SQL"]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+
+  <!--
+    No-FOUC theme bootstrap. Runs synchronously before first paint so the
+    correct palette is applied immediately (mirrors ThemeService resolve
+    order: saved choice -> OS preference -> light).
+  -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('portfolio.theme');
+        var theme = (saved === 'light' || saved === 'dark')
+          ? saved
+          : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) { /* localStorage blocked — CSS media query fallback applies */ }
+    })();
+  </script>
 </head>
 <body>
   <app-root></app-root>

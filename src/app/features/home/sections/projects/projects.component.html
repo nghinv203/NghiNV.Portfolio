@@ -1,0 +1,36 @@
+<section class="projects" [id]="sectionIds.projects">
+  <div class="projects__wrap">
+    <app-section-header
+      [title]="'projects.title' | transloco"
+      [subtitle]="'projects.subtitle' | transloco"
+    />
+
+    @switch (state().status) {
+      @case ('loading') {
+        <div class="projects__grid">
+          @for (card of skeletonCards; track $index) {
+            <div class="projects__skeleton">
+              <app-skeleton height="200px" radius="var(--radius-lg)" />
+              <app-skeleton variant="text" width="60%" />
+              <app-skeleton variant="text" width="90%" />
+              <app-skeleton variant="text" width="40%" />
+            </div>
+          }
+        </div>
+      }
+      @case ('empty') {
+        <app-empty-state />
+      }
+      @case ('error') {
+        <app-error-state [canRetry]="false" />
+      }
+      @default {
+        <div class="projects__grid">
+          @for (project of ordered(); track project.id) {
+            <app-project-card [project]="project" [lang]="lang()" />
+          }
+        </div>
+      }
+    }
+  </div>
+</section>

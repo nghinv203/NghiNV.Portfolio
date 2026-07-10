@@ -1,0 +1,70 @@
+<a class="skip-link" href="#main-content">{{ 'a11y.skipToContent' | transloco }}</a>
+
+<header class="header">
+  <div class="header__inner">
+    <a class="brand" routerLink="/" [fragment]="'hero'">
+      Nghi<span>NV</span>
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      @for (item of navItems; track item.id) {
+        <a class="nav__link" routerLink="/" [fragment]="item.id">{{ item.key | transloco }}</a>
+      }
+    </nav>
+
+    <div class="actions">
+      <app-language-switcher />
+      <app-theme-toggle />
+      <button
+        type="button"
+        class="menu-btn"
+        [attr.aria-expanded]="menuOpen()"
+        aria-controls="mobile-nav"
+        [attr.aria-label]="(menuOpen() ? 'a11y.closeMenu' : 'a11y.openMenu') | transloco"
+        (click)="toggleMenu()"
+      >
+        <app-icon [name]="menuOpen() ? 'close' : 'menu'" />
+      </button>
+    </div>
+  </div>
+
+  @if (menuOpen()) {
+    <nav id="mobile-nav" class="mobile-nav" aria-label="Primary">
+      @for (item of navItems; track item.id) {
+        <a class="mobile-nav__link" routerLink="/" [fragment]="item.id" (click)="closeMenu()">
+          {{ item.key | transloco }}
+        </a>
+      }
+    </nav>
+  }
+</header>
+
+<main id="main-content">
+  <router-outlet />
+</main>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <p class="footer__copy">© {{ year }} Nguyen Van Nghi. {{ 'footer.rights' | transloco }}</p>
+
+    @if (profile()?.socials; as socials) {
+      <ul class="footer__socials" role="list">
+        @for (social of socials; track social.url) {
+          <li>
+            <a
+              [href]="social.url"
+              class="footer__social"
+              [attr.aria-label]="social.platform"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <app-icon [name]="social.icon" [size]="18" />
+            </a>
+          </li>
+        }
+      </ul>
+    }
+
+    <p class="footer__built">{{ 'footer.builtWith' | transloco }}</p>
+  </div>
+</footer>

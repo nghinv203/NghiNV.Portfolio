@@ -1,0 +1,28 @@
+@use 'mixins' as *;
+
+.projects__wrap {
+  @include container;
+  @include section-spacing;
+}
+
+.projects__grid {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: 1fr;
+
+  @include bp('sm') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include bp('lg') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.projects__skeleton {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}

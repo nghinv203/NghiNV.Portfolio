@@ -1,0 +1,81 @@
+<section class="contact" [id]="sectionIds.contact">
+  <div class="contact__wrap">
+    <app-section-header
+      [title]="'contact.title' | transloco"
+      [subtitle]="'contact.subtitle' | transloco"
+    />
+
+    <div class="contact__grid">
+      <!-- Contact details -->
+      <ul class="contact__info" role="list">
+        @if (profile(); as p) {
+          <li class="contact__info-item">
+            <app-icon name="mail" [size]="18" />
+            <a [href]="'mailto:' + p.contact.email">{{ p.contact.email }}</a>
+          </li>
+          @if (p.contact.phone) {
+            <li class="contact__info-item">
+              <app-icon name="phone" [size]="18" />
+              <a [href]="'tel:' + p.contact.phone">{{ p.contact.phone }}</a>
+            </li>
+          }
+          @if (p.contact.location) {
+            <li class="contact__info-item">
+              <app-icon name="map-pin" [size]="18" />
+              <span>{{ p.contact.location }}</span>
+            </li>
+          }
+        }
+      </ul>
+
+      <!-- Form -->
+      <form class="contact__form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="field">
+          <label for="c-name">{{ 'contact.name' | transloco }}</label>
+          <input id="c-name" type="text" formControlName="name" autocomplete="name" />
+          @if (invalid('name')) {
+            <p class="field__error">{{ 'contact.required' | transloco }}</p>
+          }
+        </div>
+
+        <div class="field">
+          <label for="c-email">{{ 'contact.email' | transloco }}</label>
+          <input id="c-email" type="email" formControlName="email" autocomplete="email" />
+          @if (invalid('email')) {
+            <p class="field__error">
+              {{
+                (form.controls.email.errors?.['required']
+                  ? 'contact.required'
+                  : 'contact.invalidEmail'
+                ) | transloco
+              }}
+            </p>
+          }
+        </div>
+
+        <div class="field">
+          <label for="c-message">{{ 'contact.message' | transloco }}</label>
+          <textarea id="c-message" rows="5" formControlName="message"></textarea>
+          @if (invalid('message')) {
+            <p class="field__error">{{ 'contact.required' | transloco }}</p>
+          }
+        </div>
+
+        <button type="submit" class="btn btn--primary" [disabled]="status() === 'sending'">
+          {{ (status() === 'sending' ? 'contact.sending' : 'contact.send') | transloco }}
+        </button>
+
+        @if (status() === 'success') {
+          <p class="contact__result contact__result--ok" role="status">
+            {{ 'contact.success' | transloco }}
+          </p>
+        }
+        @if (status() === 'error') {
+          <p class="contact__result contact__result--err" role="alert">
+            {{ 'contact.error' | transloco }}
+          </p>
+        }
+      </form>
+    </div>
+  </div>
+</section>

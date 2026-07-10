@@ -1,0 +1,9 @@
+<div class="error" role="alert">
+  <p class="error__title">{{ 'state.errorTitle' | transloco }}</p>
+  <p class="error__body">{{ 'state.errorBody' | transloco }}</p>
+  @if (canRetry()) {
+    <button type="button" class="error__retry" (click)="retry.emit()">
+      {{ 'state.retry' | transloco }}
+    </button>
+  }
+</div>

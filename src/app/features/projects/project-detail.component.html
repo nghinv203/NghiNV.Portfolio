@@ -1,0 +1,90 @@
+<article class="detail">
+  <div class="detail__wrap">
+    <a class="detail__back" routerLink="/" [fragment]="'projects'">
+      <app-icon name="arrow-left" [size]="18" />
+      {{ 'projects.backToProjects' | transloco }}
+    </a>
+
+    @switch (state().status) {
+      @case ('loading') {
+        <app-skeleton variant="text" width="50%" height="2.5rem" />
+        <app-skeleton variant="text" width="80%" />
+        <app-skeleton height="320px" radius="var(--radius-lg)" />
+        <app-skeleton variant="text" width="95%" />
+        <app-skeleton variant="text" width="90%" />
+      }
+      @case ('error') {
+        <div class="detail__notfound">
+          <h1>{{ 'notFound.title' | transloco }}</h1>
+          <p>{{ 'notFound.body' | transloco }}</p>
+        </div>
+      }
+      @default {
+        @if (state().data; as p) {
+          <header class="detail__header">
+            <p class="detail__year">{{ p.year }}</p>
+            <h1 class="detail__title">{{ p.title }}</h1>
+            <p class="detail__summary">{{ p.summary | localize: lang() }}</p>
+
+            <div class="detail__links">
+              @if (p.links.demo) {
+                <a class="btn btn--primary" [href]="p.links.demo" target="_blank" rel="noopener">
+                  <app-icon name="external" [size]="18" />
+                  {{ 'projects.liveDemo' | transloco }}
+                </a>
+              }
+              @if (p.links.repo) {
+                <a class="btn btn--ghost" [href]="p.links.repo" target="_blank" rel="noopener">
+                  <app-icon name="github" [size]="18" />
+                  {{ 'projects.sourceCode' | transloco }}
+                </a>
+              }
+            </div>
+          </header>
+
+          @if (p.gallery.length) {
+            <img
+              class="detail__cover"
+              [src]="p.gallery[0]"
+              [alt]="p.title"
+              width="800"
+              height="500"
+            />
+          }
+
+          <div class="detail__content">
+            <p class="detail__desc">{{ p.description | localize: lang() }}</p>
+
+            @if (p.role) {
+              <div class="detail__block">
+                <h2>Role</h2>
+                <p>{{ p.role | localize: lang() }}</p>
+              </div>
+            }
+            @if (p.problem) {
+              <div class="detail__block">
+                <h2>Problem</h2>
+                <p>{{ p.problem | localize: lang() }}</p>
+              </div>
+            }
+            @if (p.solution) {
+              <div class="detail__block">
+                <h2>Solution</h2>
+                <p>{{ p.solution | localize: lang() }}</p>
+              </div>
+            }
+
+            <div class="detail__block">
+              <h2>{{ 'projects.techLabel' | transloco }}</h2>
+              <ul class="detail__tech" role="list">
+                @for (tech of p.techStack; track tech) {
+                  <li>{{ tech }}</li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+      }
+    }
+  </div>
+</article>

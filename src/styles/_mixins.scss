@@ -1,0 +1,55 @@
+@use 'tokens' as *;
+@use 'sass:map';
+
+// Mobile-first media query. Usage: @include bp('md') { ... }
+@mixin bp($name) {
+  $size: map.get($breakpoints, $name);
+  @if $size {
+    @media (min-width: $size) {
+      @content;
+    }
+  } @else {
+    @error 'Unknown breakpoint: #{$name}';
+  }
+}
+
+// Centered page container with fluid gutters (no nested rules -> safe to
+// compose with other declarations without Sass mixed-decls warnings).
+@mixin container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: clamp(var(--space-4), 4vw, var(--space-6));
+}
+
+// Fluid vertical rhythm between page sections.
+@mixin section-spacing {
+  padding-block: clamp(var(--space-10), 10vw, var(--space-16));
+}
+
+// Accessible focus indicator.
+@mixin focus-ring {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+// Screen-reader-only content.
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Truncate to N lines.
+@mixin line-clamp($lines) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

@@ -1,0 +1,86 @@
+// ─────────────────────────────────────────────────────────────
+// SEMANTIC COLOR TOKENS PER THEME
+// Components reference these var(--color-*) names only — never raw
+// hex. Switching [data-theme] on <html> swaps the whole palette.
+// Light is the default (applies to :root and [data-theme="light"]).
+// ─────────────────────────────────────────────────────────────
+
+@mixin light-theme {
+  color-scheme: light;
+
+  --color-bg: #ffffff;
+  --color-bg-subtle: #f7f8fa;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f0f2f5;
+  --color-border: #e4e7ec;
+
+  --color-text: #1a1d23;
+  --color-text-muted: #5b616e;
+  --color-text-subtle: #8a90a0;
+
+  --color-primary: #4f46e5;
+  --color-primary-hover: #4338ca;
+  --color-primary-contrast: #ffffff;
+  --color-accent: #0891b2;
+
+  --color-success: #16a34a;
+  --color-danger: #dc2626;
+
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.1);
+  --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.08);
+  --shadow-lg: 0 12px 32px rgba(16, 24, 40, 0.12);
+
+  --skeleton-base: #e9ecf2;
+  --skeleton-highlight: #f4f6f9;
+
+  --overlay: rgba(16, 24, 40, 0.4);
+}
+
+@mixin dark-theme {
+  color-scheme: dark;
+
+  --color-bg: #0d1117;
+  --color-bg-subtle: #12181f;
+  --color-surface: #161b22;
+  --color-surface-hover: #1e252e;
+  --color-border: #262d38;
+
+  --color-text: #e6edf3;
+  --color-text-muted: #9aa4b2;
+  --color-text-subtle: #6b7280;
+
+  --color-primary: #818cf8;
+  --color-primary-hover: #a5b4fc;
+  --color-primary-contrast: #0d1117;
+  --color-accent: #22d3ee;
+
+  --color-success: #4ade80;
+  --color-danger: #f87171;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
+
+  --skeleton-base: #1e252e;
+  --skeleton-highlight: #2a323d;
+
+  --overlay: rgba(0, 0, 0, 0.6);
+}
+
+// Default = light.
+:root,
+:root[data-theme='light'] {
+  @include light-theme;
+}
+
+// Explicit dark selection (set by ThemeService / no-FOUC script).
+:root[data-theme='dark'] {
+  @include dark-theme;
+}
+
+// First paint before JS runs and no explicit choice: follow the OS.
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    @include dark-theme;
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "about": "紹介",
+    "skills": "スキル",
+    "experience": "経歴",
+    "projects": "プロジェクト",
+    "contact": "お問い合わせ"
+  },
+  "a11y": {
+    "toggleTheme": "ライト／ダークテーマを切り替え",
+    "selectLanguage": "言語を選択",
+    "openMenu": "メニューを開く",
+    "closeMenu": "メニューを閉じる",
+    "skipToContent": "コンテンツへスキップ"
+  },
+  "lang": {
+    "vi": "Tiếng Việt",
+    "en": "English",
+    "ja": "日本語"
+  },
+  "hero": {
+    "greeting": "こんにちは、",
+    "cta": "お問い合わせ",
+    "secondaryCta": "プロジェクトを見る",
+    "downloadCv": "CVをダウンロード"
+  },
+  "about": {
+    "title": "私について",
+    "yearsLabel": "経験年数",
+    "locationLabel": "拠点"
+  },
+  "skills": {
+    "title": "スキル＆技術スタック",
+    "subtitle": "使用しているツールと技術",
+    "categories": {
+      "language": "言語",
+      "framework": "フレームワーク",
+      "platform": "プラットフォーム＆データベース",
+      "tooling": "ツール",
+      "soft": "プラクティス"
+    }
+  },
+  "experience": {
+    "title": "職務経歴",
+    "present": "現在"
+  },
+  "projects": {
+    "title": "注目のプロジェクト",
+    "subtitle": "これまでに作成したものの一部",
+    "viewAll": "すべてのプロジェクトを見る",
+    "viewProject": "プロジェクトを見る",
+    "liveDemo": "デモ",
+    "sourceCode": "ソースコード",
+    "backToProjects": "プロジェクト一覧へ戻る",
+    "techLabel": "使用技術"
+  },
+  "contact": {
+    "title": "お問い合わせ",
+    "subtitle": "プロジェクトのご相談やご挨拶などお気軽に。",
+    "name": "お名前",
+    "email": "メール",
+    "message": "メッセージ",
+    "send": "送信する",
+    "sending": "送信中…",
+    "success": "ありがとうございます！メッセージを送信しました。",
+    "error": "エラーが発生しました。もう一度お試しください。",
+    "required": "この項目は必須です。",
+    "invalidEmail": "有効なメールアドレスを入力してください。"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "builtWith": "Angular で構築"
+  },
+  "state": {
+    "loading": "読み込み中…",
+    "empty": "まだ何もありません。",
+    "errorTitle": "コンテンツを読み込めませんでした",
+    "errorBody": "データの取得中にエラーが発生しました。",
+    "retry": "再試行"
+  },
+  "notFound": {
+    "title": "ページが見つかりません",
+    "body": "お探しのページは存在しません。",
+    "home": "ホームに戻る"
+  }
+}

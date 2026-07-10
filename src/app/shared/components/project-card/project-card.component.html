@@ -1,0 +1,44 @@
+<article class="card">
+  <a class="card__media" [routerLink]="[detailBase, project().slug]" tabindex="-1" aria-hidden="true">
+    <img
+      class="card__thumb"
+      [src]="project().thumbnailUrl"
+      [alt]="project().title"
+      loading="lazy"
+      width="800"
+      height="500"
+    />
+  </a>
+
+  <div class="card__body">
+    <h3 class="card__title">
+      <a [routerLink]="[detailBase, project().slug]">{{ project().title }}</a>
+    </h3>
+    <p class="card__summary">{{ project().summary | localize: lang() }}</p>
+
+    <ul class="card__tech" role="list">
+      @for (tech of project().techStack.slice(0, 4); track tech) {
+        <li>{{ tech }}</li>
+      }
+    </ul>
+
+    <div class="card__links">
+      <a class="card__link" [routerLink]="[detailBase, project().slug]">
+        {{ 'projects.viewProject' | transloco }}
+        <app-icon name="arrow-right" [size]="16" />
+      </a>
+      @if (project().links.demo) {
+        <a class="card__link card__link--muted" [href]="project().links.demo" target="_blank" rel="noopener">
+          <app-icon name="external" [size]="16" />
+          {{ 'projects.liveDemo' | transloco }}
+        </a>
+      }
+      @if (project().links.repo) {
+        <a class="card__link card__link--muted" [href]="project().links.repo" target="_blank" rel="noopener">
+          <app-icon name="github" [size]="16" />
+          {{ 'projects.sourceCode' | transloco }}
+        </a>
+      }
+    </div>
+  </div>
+</article>

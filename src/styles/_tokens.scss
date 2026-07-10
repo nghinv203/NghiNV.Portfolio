@@ -1,0 +1,70 @@
+// ─────────────────────────────────────────────────────────────
+// PRIMITIVE / THEME-INDEPENDENT TOKENS
+// Colors live in _themes.scss (they change per theme). Everything
+// here is constant across light/dark.
+// ─────────────────────────────────────────────────────────────
+
+// Breakpoints — SCSS map consumed by mixins, NOT emitted as CSS.
+$breakpoints: (
+  'sm': 480px,
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1280px,
+);
+
+:root {
+  // Spacing scale (4px base)
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-8: 3rem;
+  --space-10: 4rem;
+  --space-12: 6rem;
+  --space-16: 8rem;
+
+  // Radii
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+
+  // Typography families
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+
+  // Type scale
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.75rem;
+  --text-5xl: 3.5rem;
+
+  --leading-tight: 1.2;
+  --leading-normal: 1.6;
+
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  // Layout
+  --container-max: 1120px;
+  --header-height: 4rem;
+
+  // Motion
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration: 250ms;
+
+  // Z-index scale
+  --z-header: 100;
+  --z-drawer: 200;
+  --z-modal: 300;
+}
