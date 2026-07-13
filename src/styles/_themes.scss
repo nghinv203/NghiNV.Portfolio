@@ -39,6 +39,11 @@
     0 12px 0 -1px var(--color-surface-hover),
     0 13px 0 -1px var(--color-border),
     0 28px 42px -14px rgba(16, 24, 40, 0.28);
+  // Compact 3D edge for chips, pills, inputs and small buttons.
+  --shadow-3d-sm: 0 3px 0 -1px var(--color-border), 0 5px 10px -6px rgba(16, 24, 40, 0.2);
+  --shadow-3d-sm-hover: 0 5px 0 -1px var(--color-border), 0 10px 16px -8px rgba(16, 24, 40, 0.26);
+  // Colored extrusion under solid/primary buttons.
+  --btn-edge: color-mix(in srgb, var(--color-primary) 62%, #000);
   // Decorative offset block behind the avatar frame.
   --avatar-block: linear-gradient(135deg, var(--color-primary), var(--color-accent));
 
@@ -82,6 +87,11 @@
     0 12px 0 -1px var(--color-surface-hover),
     0 13px 0 -1px var(--color-border),
     0 28px 42px -14px rgba(0, 0, 0, 0.7);
+  // Compact 3D edge for chips, pills, inputs and small buttons.
+  --shadow-3d-sm: 0 3px 0 -1px var(--color-border), 0 5px 10px -6px rgba(0, 0, 0, 0.55);
+  --shadow-3d-sm-hover: 0 5px 0 -1px var(--color-border), 0 10px 16px -8px rgba(0, 0, 0, 0.65);
+  // Colored extrusion under solid/primary buttons.
+  --btn-edge: color-mix(in srgb, var(--color-primary) 55%, #000);
   // Decorative offset block behind the avatar frame.
   --avatar-block: linear-gradient(135deg, var(--color-primary), var(--color-accent));
 

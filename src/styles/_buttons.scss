@@ -12,29 +12,44 @@
   line-height: 1;
   transition: background-color var(--duration-fast) var(--ease),
     color var(--duration-fast) var(--ease), border-color var(--duration-fast) var(--ease),
-    transform var(--duration-fast) var(--ease);
-
-  &:active {
-    transform: translateY(1px);
-  }
+    box-shadow var(--duration-fast) var(--ease), transform var(--duration-fast) var(--ease);
 }
 
+// Solid button as a raised 3D key: colored extrusion beneath that
+// compresses as the button is pressed down.
 .btn--primary {
   background-color: var(--color-primary);
   color: var(--color-primary-contrast);
+  box-shadow: 0 4px 0 0 var(--btn-edge), 0 6px 12px -4px color-mix(in srgb, var(--color-primary) 45%, transparent);
 
   &:hover {
     background-color: var(--color-primary-hover);
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 0 var(--btn-edge), 0 4px 8px -4px color-mix(in srgb, var(--color-primary) 45%, transparent);
+  }
+
+  &:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 0 var(--btn-edge);
   }
 }
 
 .btn--ghost {
   border: 1px solid var(--color-border);
   color: var(--color-text);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-3d-sm);
 
   &:hover {
     background-color: var(--color-surface-hover);
-    border-color: var(--color-text-subtle);
+    border-color: color-mix(in srgb, var(--color-primary) 45%, transparent);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-3d-sm-hover);
+  }
+
+  &:active {
+    transform: translateY(1px);
+    box-shadow: var(--shadow-sm);
   }
 }
 
@@ -44,5 +59,10 @@
 
   &:hover {
     color: var(--color-primary);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(1px);
   }
 }

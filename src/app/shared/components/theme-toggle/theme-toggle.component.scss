@@ -1,4 +1,7 @@
+@use 'mixins' as *;
+
 .toggle {
+  @include icon-3d;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -6,10 +9,4 @@
   height: 2.5rem;
   border-radius: var(--radius-full);
   color: var(--color-text-muted);
-  transition: background-color var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease);
-
-  &:hover {
-    background-color: var(--color-surface-hover);
-    color: var(--color-text);
-  }
 }

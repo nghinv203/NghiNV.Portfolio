@@ -29,6 +29,7 @@
   background-color: color-mix(in srgb, var(--color-bg) 85%, transparent);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
 
   &__inner {
     @include container;
@@ -62,10 +63,11 @@
     font-size: var(--text-sm);
     font-weight: var(--weight-medium);
     color: var(--color-text-muted);
-    transition: color var(--duration-fast) var(--ease);
+    transition: color var(--duration-fast) var(--ease), transform var(--duration-fast) var(--ease);
 
     &:hover {
       color: var(--color-text);
+      transform: translateY(-2px);
     }
   }
 }
@@ -77,6 +79,7 @@
 }
 
 .menu-btn {
+  @include icon-3d;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -84,11 +87,6 @@
   height: 2.5rem;
   border-radius: var(--radius-md);
   color: var(--color-text-muted);
-
-  &:hover {
-    background-color: var(--color-surface-hover);
-    color: var(--color-text);
-  }
 
   @include bp('md') {
     display: none;
@@ -101,6 +99,7 @@
   padding: var(--space-3) var(--space-4) var(--space-5);
   border-top: 1px solid var(--color-border);
   background-color: var(--color-bg);
+  box-shadow: var(--shadow-lg);
 
   @include bp('md') {
     display: none;
@@ -154,6 +153,7 @@ main {
   }
 
   &__social {
+    @include icon-3d;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -161,11 +161,5 @@ main {
     height: 2.25rem;
     border-radius: var(--radius-full);
     color: var(--color-text-muted);
-    transition: background-color var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease);
-
-    &:hover {
-      background-color: var(--color-surface-hover);
-      color: var(--color-primary);
-    }
   }
 }

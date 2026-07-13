@@ -63,6 +63,42 @@
   }
 }
 
+// Compact 3D chip/pill: raised surface that lifts slightly on hover.
+@mixin chip-3d {
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-3d-sm);
+  transition: transform var(--duration-fast) var(--ease), box-shadow var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-3d-sm-hover);
+    border-color: color-mix(in srgb, var(--color-primary) 45%, transparent);
+  }
+}
+
+// Round 3D icon button (theme toggle, socials, menu). Presses in on click.
+@mixin icon-3d {
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-3d-sm);
+  transition: transform var(--duration-fast) var(--ease), box-shadow var(--duration-fast) var(--ease),
+    color var(--duration-fast) var(--ease), border-color var(--duration-fast) var(--ease);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-3d-sm-hover);
+    color: var(--color-primary);
+    border-color: color-mix(in srgb, var(--color-primary) 45%, transparent);
+  }
+
+  &:active {
+    transform: translateY(1px);
+    box-shadow: var(--shadow-sm);
+  }
+}
+
 // Truncate to N lines.
 @mixin line-clamp($lines) {
   display: -webkit-box;

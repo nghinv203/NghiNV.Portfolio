@@ -27,20 +27,22 @@
 }
 
 .timeline__item {
+  @include card-3d;
   position: relative;
   display: grid;
   gap: var(--space-2);
+  padding: var(--space-5);
 
   &::before {
     content: '';
     position: absolute;
-    left: calc(-1 * var(--space-6));
-    top: 6px;
-    width: 12px;
-    height: 12px;
+    left: calc(-1 * var(--space-6) - 2px);
+    top: calc(var(--space-5) + 6px);
+    width: 14px;
+    height: 14px;
     border-radius: var(--radius-full);
     background-color: var(--color-primary);
-    box-shadow: 0 0 0 4px var(--color-bg-subtle);
+    box-shadow: 0 0 0 4px var(--color-bg-subtle), var(--shadow-3d-sm);
   }
 }
 
@@ -101,10 +103,10 @@
 }
 
 .timeline__tech-item {
-  padding: 2px var(--space-3);
+  @include chip-3d;
+  padding: 3px var(--space-3);
   border-radius: var(--radius-sm);
   font-size: var(--text-xs);
   font-family: var(--font-mono);
-  background-color: var(--color-surface-hover);
   color: var(--color-text-muted);
 }

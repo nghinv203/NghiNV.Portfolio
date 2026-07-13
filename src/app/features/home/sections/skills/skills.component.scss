@@ -38,16 +38,15 @@
 }
 
 .skills__tag {
+  @include chip-3d;
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-full);
   font-size: var(--text-sm);
   font-weight: var(--weight-medium);
-  background-color: var(--color-surface-hover);
-  border: 1px solid transparent;
   color: var(--color-text);
 
   &.is-featured {
-    background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
+    background-color: color-mix(in srgb, var(--color-primary) 12%, var(--color-surface));
     border-color: color-mix(in srgb, var(--color-primary) 40%, transparent);
     color: var(--color-primary);
   }

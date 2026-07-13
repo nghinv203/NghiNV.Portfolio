@@ -51,11 +51,11 @@
 }
 
 .card__tech li {
-  padding: 2px var(--space-2);
+  @include chip-3d;
+  padding: 3px var(--space-2);
   border-radius: var(--radius-sm);
   font-size: var(--text-xs);
   font-family: var(--font-mono);
-  background-color: var(--color-surface-hover);
   color: var(--color-text-muted);
 }
 
