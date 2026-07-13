@@ -142,11 +142,11 @@ export class HeroSceneComponent {
         angle,
         radius,
         baseY,
-        orbitSpeed: 0.12 + (i % 4) * 0.03,
-        floatSpeed: 0.6 + (i % 5) * 0.15,
-        floatAmp: 0.18 + (i % 3) * 0.08,
-        spinX: 0.2 + (i % 3) * 0.1,
-        spinY: 0.25 + (i % 4) * 0.08,
+        orbitSpeed: 0.22 + (i % 4) * 0.06,
+        floatSpeed: 0.8 + (i % 5) * 0.2,
+        floatAmp: 0.26 + (i % 3) * 0.1,
+        spinX: 0.35 + (i % 3) * 0.15,
+        spinY: 0.4 + (i % 4) * 0.12,
       });
     }
 
@@ -194,7 +194,7 @@ export class HeroSceneComponent {
       rot.x += vel.x;
       vel.x *= 0.92;
       vel.y *= 0.92;
-      group.rotation.y = rot.y + pointer.x * 0.35 + elapsed * 0.05;
+      group.rotation.y = rot.y + pointer.x * 0.35 + elapsed * 0.1;
       group.rotation.x = THREE.MathUtils.clamp(rot.x + pointer.y * 0.2, -0.8, 0.8);
 
       renderer.render(scene, camera);

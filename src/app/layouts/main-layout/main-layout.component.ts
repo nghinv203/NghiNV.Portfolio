@@ -5,6 +5,7 @@ import { TranslocoModule } from '@jsverse/transloco';
 import { LanguageService } from '@core/services/language.service';
 import { ProfileStore } from '@core/services/profile.store';
 import { SECTION_IDS } from '@core/constants/routes';
+import { BackgroundSceneComponent } from '@shared/components/background-scene/background-scene.component';
 import { IconComponent } from '@shared/components/icon/icon.component';
 import { LanguageSwitcherComponent } from '@shared/components/language-switcher/language-switcher.component';
 import { ThemeToggleComponent } from '@shared/components/theme-toggle/theme-toggle.component';
@@ -24,6 +25,7 @@ interface NavItem {
     IconComponent,
     ThemeToggleComponent,
     LanguageSwitcherComponent,
+    BackgroundSceneComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './main-layout.component.html',

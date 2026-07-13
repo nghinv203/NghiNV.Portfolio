@@ -5,7 +5,8 @@ body {
   font-size: var(--text-base);
   font-weight: var(--weight-normal);
   color: var(--color-text);
-  background-color: var(--color-bg);
+  // Transparent so the fixed 3D background canvas shows through the page.
+  background-color: transparent;
 }
 
 h1,
