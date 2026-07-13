@@ -9,7 +9,9 @@ import {
 } from '@angular/core';
 import type * as ThreeNS from 'three';
 
-/** One orbiting body plus its per-frame motion parameters. */
+import { buildTechModels } from '@shared/three/tech-stack.icons';
+
+/** One orbiting tech-logo model plus its per-frame motion parameters. */
 interface OrbitBody {
   mesh: ThreeNS.Mesh;
   angle: number;
@@ -23,15 +25,14 @@ interface OrbitBody {
 }
 
 /**
- * Decorative WebGL scene for the hero: a cluster of faceted crystals that
- * orbit the avatar, react to the pointer (parallax) and can be dragged to
- * spin with inertia.
+ * Decorative WebGL scene for the hero: the user's core tech-stack logos
+ * (extruded to 3D) orbit the avatar, react to the pointer (parallax) and can
+ * be dragged to spin with inertia.
  *
  * Design constraints:
  *  - Browser-only (afterNextRender) — never touches WebGL during SSR.
  *  - three.js is dynamically imported so it lands in its own lazy chunk.
- *  - Colours are read from the live CSS theme tokens and refreshed on theme
- *    change, so it matches light/dark automatically.
+ *  - Lights follow the CSS theme tokens; logos keep their brand colours.
  *  - Honours prefers-reduced-motion (renders a single static frame) and
  *    pauses the render loop when off-screen or the tab is hidden.
  */
@@ -61,7 +62,10 @@ export class HeroSceneComponent {
   }
 
   private async init(): Promise<void> {
-    const THREE = await import('three');
+    const [THREE, { SVGLoader }] = await Promise.all([
+      import('three'),
+      import('three/examples/jsm/loaders/SVGLoader.js'),
+    ]);
     if (this.destroyed) {
       return;
     }
@@ -82,7 +86,7 @@ export class HeroSceneComponent {
     camera.position.set(0, 0, 12);
 
     // ── Lighting ──────────────────────────────────────────────
-    const ambient = new THREE.AmbientLight(0xffffff, 0.85);
+    const ambient = new THREE.AmbientLight(0xffffff, 1);
     const keyLight = new THREE.DirectionalLight(0xffffff, 1.4);
     keyLight.position.set(3, 4, 5);
     const primaryLight = new THREE.PointLight(0xffffff, 18, 60, 2);
@@ -91,49 +95,43 @@ export class HeroSceneComponent {
     accentLight.position.set(5, -3, 3);
     scene.add(ambient, keyLight, primaryLight, accentLight);
 
-    // ── Theme colours ─────────────────────────────────────────
     const readColor = (token: string, fallback: string): ThreeNS.Color => {
       const raw = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
       return new THREE.Color(raw || fallback);
     };
 
-    // ── Orbiting crystals ─────────────────────────────────────
+    // ── Orbiting tech-logo models ─────────────────────────────
     const group = new THREE.Group();
     scene.add(group);
 
-    const geometries: ThreeNS.BufferGeometry[] = [
-      new THREE.IcosahedronGeometry(1, 0),
-      new THREE.OctahedronGeometry(1, 0),
-      new THREE.DodecahedronGeometry(1, 0),
-      new THREE.TetrahedronGeometry(1, 0),
-      new THREE.TorusGeometry(0.8, 0.32, 16, 40),
-    ];
-    // Tracks which theme token each material follows, so a theme switch recolours it.
-    const themed: { material: ThreeNS.MeshStandardMaterial; token: 'primary' | 'accent' }[] = [];
+    const models = buildTechModels(THREE, SVGLoader);
+    if (!models.length) {
+      renderer.dispose();
+      return;
+    }
+    const materials = models.map(
+      (m) =>
+        new THREE.MeshStandardMaterial({
+          color: new THREE.Color(m.color),
+          emissive: new THREE.Color(m.color),
+          emissiveIntensity: 0.16,
+          metalness: 0.45,
+          roughness: 0.4,
+          side: THREE.DoubleSide,
+        }),
+    );
+
     const bodies: OrbitBody[] = [];
+    const COUNT = Math.min(9, models.length);
 
-    const COUNT = 8;
     for (let i = 0; i < COUNT; i++) {
-      const geometry = geometries[i % geometries.length];
-      const token: 'primary' | 'accent' = i % 2 === 0 ? 'primary' : 'accent';
-      const material = new THREE.MeshStandardMaterial({
-        color: 0xffffff,
-        emissive: 0x000000,
-        emissiveIntensity: 0.3,
-        metalness: 0.4,
-        roughness: 0.3,
-        flatShading: true,
-        wireframe: i % 4 === 3,
-      });
-      themed.push({ material, token });
-
-      const mesh = new THREE.Mesh(geometry, material);
-      const size = 0.32 + (i % 3) * 0.14;
+      const mesh = new THREE.Mesh(models[i].geometry, materials[i]);
+      const size = 0.55 + (i % 3) * 0.16;
       mesh.scale.setScalar(size);
 
       const angle = (i / COUNT) * Math.PI * 2;
-      const radius = 2.3 + (i % 3) * 0.5;
-      const baseY = Math.sin(i * 1.7) * 1.4;
+      const radius = 2.4 + (i % 3) * 0.5;
+      const baseY = Math.sin(i * 1.7) * 1.3;
       mesh.position.set(Math.cos(angle) * radius, baseY, Math.sin(angle) * radius);
       group.add(mesh);
 
@@ -145,21 +143,14 @@ export class HeroSceneComponent {
         orbitSpeed: 0.22 + (i % 4) * 0.06,
         floatSpeed: 0.8 + (i % 5) * 0.2,
         floatAmp: 0.26 + (i % 3) * 0.1,
-        spinX: 0.35 + (i % 3) * 0.15,
+        spinX: 0.3 + (i % 3) * 0.12,
         spinY: 0.4 + (i % 4) * 0.12,
       });
     }
 
-    const applyColors = (): void => {
-      const primary = readColor('--color-primary', '#4f46e5');
-      const accent = readColor('--color-accent', '#0891b2');
-      for (const { material, token } of themed) {
-        const c = token === 'primary' ? primary : accent;
-        material.color.copy(c);
-        material.emissive.copy(c);
-      }
-      primaryLight.color.copy(primary);
-      accentLight.color.copy(accent);
+    const applyLights = (): void => {
+      primaryLight.color.copy(readColor('--color-primary', '#4f46e5'));
+      accentLight.color.copy(readColor('--color-accent', '#0891b2'));
       if (!running) {
         renderFrame(0);
       }
@@ -286,13 +277,13 @@ export class HeroSceneComponent {
     const onVisibility = (): void => (document.hidden ? stop() : start());
     document.addEventListener('visibilitychange', onVisibility);
 
-    const themeObserver = new MutationObserver(applyColors);
+    const themeObserver = new MutationObserver(applyLights);
     themeObserver.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ['data-theme'],
     });
 
-    applyColors();
+    applyLights();
     resize();
     renderFrame(0); // paint one frame immediately; IntersectionObserver starts the loop
 
@@ -306,8 +297,8 @@ export class HeroSceneComponent {
       host.removeEventListener('pointermove', onPointerMove);
       host.removeEventListener('pointerup', onPointerUp);
       host.removeEventListener('pointerleave', onPointerUp);
-      geometries.forEach((g) => g.dispose());
-      themed.forEach(({ material }) => material.dispose());
+      models.forEach((m) => m.geometry.dispose());
+      materials.forEach((m) => m.dispose());
       renderer.dispose();
     };
   }

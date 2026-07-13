@@ -9,7 +9,9 @@ import {
 } from '@angular/core';
 import type * as ThreeNS from 'three';
 
-/** A drifting body plus its per-frame motion parameters. */
+import { buildTechModels } from '@shared/three/tech-stack.icons';
+
+/** A drifting tech-logo model plus its per-frame motion parameters. */
 interface Drifter {
   mesh: ThreeNS.Mesh;
   velY: number;
@@ -22,13 +24,13 @@ interface Drifter {
 }
 
 /**
- * Site-wide animated 3D backdrop. A field of faceted crystals drifts upward
- * and rebinds at the bottom, so the whole portfolio feels alive as you scroll.
- * Motion is driven by three inputs: a constant drift, the scroll position
- * (parallax) and the pointer (gentle tilt).
+ * Site-wide animated 3D backdrop. A field of the user's tech-stack logos
+ * (extruded to 3D) drifts upward and rebinds at the bottom, so the whole
+ * portfolio feels alive as you scroll. Motion combines a constant drift, the
+ * scroll position (parallax) and the pointer (gentle tilt).
  *
- * Same guardrails as the hero scene: browser-only, lazily imported, theme
- * aware, honours prefers-reduced-motion and pauses when the tab is hidden.
+ * Guardrails: browser-only, lazily imported, honours prefers-reduced-motion
+ * and pauses when the tab is hidden.
  */
 @Component({
   selector: 'app-background-scene',
@@ -55,7 +57,10 @@ export class BackgroundSceneComponent {
   }
 
   private async init(): Promise<void> {
-    const THREE = await import('three');
+    const [THREE, { SVGLoader }] = await Promise.all([
+      import('three'),
+      import('three/examples/jsm/loaders/SVGLoader.js'),
+    ]);
     if (this.destroyed) {
       return;
     }
@@ -74,8 +79,8 @@ export class BackgroundSceneComponent {
     const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 100);
     camera.position.set(0, 0, 12);
 
-    const ambient = new THREE.AmbientLight(0xffffff, 0.9);
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    const ambient = new THREE.AmbientLight(0xffffff, 1);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 1.3);
     keyLight.position.set(2, 3, 6);
     const primaryLight = new THREE.PointLight(0xffffff, 20, 80, 2);
     primaryLight.position.set(-8, 4, 6);
@@ -88,51 +93,46 @@ export class BackgroundSceneComponent {
       return new THREE.Color(raw || fallback);
     };
 
-    // Vertical half-extent of the frustum at the z=0 plane — used to spawn and
-    // recycle drifters just outside the visible area.
     const FOV_RAD = (camera.fov * Math.PI) / 180;
     const halfH = Math.tan(FOV_RAD / 2) * camera.position.z;
 
     const group = new THREE.Group();
     scene.add(group);
 
-    const geometries: ThreeNS.BufferGeometry[] = [
-      new THREE.IcosahedronGeometry(1, 0),
-      new THREE.OctahedronGeometry(1, 0),
-      new THREE.DodecahedronGeometry(1, 0),
-      new THREE.TetrahedronGeometry(1, 0),
-      new THREE.TorusGeometry(0.7, 0.28, 12, 30),
-    ];
-    const themed: { material: ThreeNS.MeshStandardMaterial; token: 'primary' | 'accent' }[] = [];
-    const drifters: Drifter[] = [];
+    // ── Tech-logo models ──────────────────────────────────────
+    const models = buildTechModels(THREE, SVGLoader);
+    if (!models.length) {
+      renderer.dispose();
+      return;
+    }
+    const materials = models.map(
+      (m) =>
+        new THREE.MeshStandardMaterial({
+          color: new THREE.Color(m.color),
+          emissive: new THREE.Color(m.color),
+          emissiveIntensity: 0.18,
+          metalness: 0.4,
+          roughness: 0.45,
+          side: THREE.DoubleSide,
+          transparent: true,
+          opacity: 0.92,
+        }),
+    );
 
-    const COUNT = 34;
+    const drifters: Drifter[] = [];
+    const COUNT = 22;
     const spanX = 22;
     const spanY = halfH * 2 + 4;
 
     for (let i = 0; i < COUNT; i++) {
-      const geometry = geometries[i % geometries.length];
-      const token: 'primary' | 'accent' = i % 2 === 0 ? 'primary' : 'accent';
-      const material = new THREE.MeshStandardMaterial({
-        color: 0xffffff,
-        emissive: 0x000000,
-        emissiveIntensity: 0.35,
-        metalness: 0.35,
-        roughness: 0.35,
-        flatShading: true,
-        transparent: true,
-        opacity: 0.85,
-        wireframe: i % 3 === 0,
-      });
-      themed.push({ material, token });
-
-      const mesh = new THREE.Mesh(geometry, material);
-      const size = 0.28 + (i % 5) * 0.16;
+      const idx = i % models.length;
+      const mesh = new THREE.Mesh(models[idx].geometry, materials[idx]);
+      const size = 0.42 + (i % 5) * 0.16;
       mesh.scale.setScalar(size);
 
       const baseX = (i / COUNT - 0.5) * spanX + (Math.sin(i * 5.3) * spanX) / COUNT;
       const z = -6 + (i % 6);
-      const y = (Math.sin(i * 2.7) * 0.5) * spanY - spanY / 2 + (i / COUNT) * spanY;
+      const y = Math.sin(i * 2.7) * 0.5 * spanY - spanY / 2 + (i / COUNT) * spanY;
       mesh.position.set(baseX, y, z);
       mesh.rotation.set(i, i * 0.7, 0);
       group.add(mesh);
@@ -140,8 +140,8 @@ export class BackgroundSceneComponent {
       drifters.push({
         mesh,
         velY: 0.35 + (i % 5) * 0.12,
-        spinX: 0.15 + (i % 4) * 0.08,
-        spinY: 0.2 + (i % 3) * 0.09,
+        spinX: 0.12 + (i % 4) * 0.06,
+        spinY: 0.18 + (i % 3) * 0.08,
         swayAmp: 0.4 + (i % 4) * 0.25,
         swaySpeed: 0.3 + (i % 5) * 0.12,
         swayPhase: i * 1.3,
@@ -149,16 +149,9 @@ export class BackgroundSceneComponent {
       });
     }
 
-    const applyColors = (): void => {
-      const primary = readColor('--color-primary', '#4f46e5');
-      const accent = readColor('--color-accent', '#0891b2');
-      for (const { material, token } of themed) {
-        const c = token === 'primary' ? primary : accent;
-        material.color.copy(c);
-        material.emissive.copy(c);
-      }
-      primaryLight.color.copy(primary);
-      accentLight.color.copy(accent);
+    const applyLights = (): void => {
+      primaryLight.color.copy(readColor('--color-primary', '#4f46e5'));
+      accentLight.color.copy(readColor('--color-accent', '#0891b2'));
       if (!running) {
         renderFrame(0);
       }
@@ -187,7 +180,6 @@ export class BackgroundSceneComponent {
         d.mesh.rotation.y += d.spinY * dt;
       }
 
-      // Pointer tilts the whole field; scroll nudges it for depth parallax.
       group.rotation.y += (pointer.x * 0.25 - group.rotation.y) * 0.05;
       group.rotation.x += (pointer.y * 0.15 - group.rotation.x) * 0.05;
       group.position.y = scrollParallax;
@@ -232,7 +224,6 @@ export class BackgroundSceneComponent {
       pointer.y = (e.clientY / window.innerHeight - 0.5) * 2;
     };
     const onScroll = (): void => {
-      // Small opposite-direction offset gives a parallax feel across sections.
       scrollParallax = (window.scrollY || 0) * 0.0015;
     };
 
@@ -243,13 +234,13 @@ export class BackgroundSceneComponent {
     const onVisibility = (): void => (document.hidden ? stop() : start());
     document.addEventListener('visibilitychange', onVisibility);
 
-    const themeObserver = new MutationObserver(applyColors);
+    const themeObserver = new MutationObserver(applyLights);
     themeObserver.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ['data-theme'],
     });
 
-    applyColors();
+    applyLights();
     resize();
     onScroll();
     renderFrame(0);
@@ -262,8 +253,8 @@ export class BackgroundSceneComponent {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', resize);
       document.removeEventListener('visibilitychange', onVisibility);
-      geometries.forEach((g) => g.dispose());
-      themed.forEach(({ material }) => material.dispose());
+      models.forEach((m) => m.geometry.dispose());
+      materials.forEach((m) => m.dispose());
       renderer.dispose();
     };
   }
