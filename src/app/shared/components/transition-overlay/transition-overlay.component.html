@@ -1,0 +1,24 @@
+@if (transition.active()) {
+  <div class="scene" [attr.data-kind]="transition.kind()" aria-hidden="true" role="presentation">
+    @switch (transition.kind()) {
+      @case ('language') {
+        <div class="lang">
+          <div class="lang__card">
+            @if (transition.flag(); as flag) {
+              <img class="lang__flag" [src]="flag" alt="" />
+            }
+            <span class="lang__name">{{ transition.label() }}</span>
+          </div>
+        </div>
+      }
+      @default {
+        <div class="sky">
+          <div class="stars"></div>
+          <div class="sun"></div>
+          <div class="moon"></div>
+          <div class="ground"></div>
+        </div>
+      }
+    }
+  </div>
+}

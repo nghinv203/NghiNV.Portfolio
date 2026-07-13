@@ -1,0 +1,255 @@
+// Full-screen cinematic overlay for theme / language switches (~3s).
+// It covers the page while the change is applied underneath, then clears.
+
+.scene {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  overflow: hidden;
+  pointer-events: auto;
+  animation: scene-fade 3s ease forwards;
+}
+
+// Opaque almost immediately (hides the swap), clears at the end (reveals it).
+@keyframes scene-fade {
+  0% {
+    opacity: 0;
+  }
+  6% {
+    opacity: 1;
+  }
+  86% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// THEME SCENE — sunset ↔ moonrise
+// ─────────────────────────────────────────────────────────────
+.sky {
+  position: absolute;
+  inset: 0;
+}
+
+.stars {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 15% 20%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 35% 12%, #fff, transparent),
+    radial-gradient(1px 1px at 55% 25%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 72% 15%, #fff, transparent),
+    radial-gradient(1px 1px at 85% 28%, #fff, transparent),
+    radial-gradient(1px 1px at 25% 38%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 63% 40%, #fff, transparent),
+    radial-gradient(1px 1px at 45% 8%, #fff, transparent),
+    radial-gradient(1px 1px at 90% 45%, #fff, transparent),
+    radial-gradient(1px 1px at 8% 48%, #fff, transparent);
+}
+
+.sun,
+.moon {
+  position: absolute;
+  left: 50%;
+  width: 22vmin;
+  height: 22vmin;
+  margin-left: -11vmin;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.sun {
+  background: radial-gradient(circle at 50% 42%, #fff6c4, #ffcf5c 45%, #ff9e3d 78%);
+  box-shadow: 0 0 14vmin 3vmin rgba(255, 190, 90, 0.55);
+}
+
+.moon {
+  background: radial-gradient(circle at 38% 38%, #ffffff, #dfe6f2 55%, #aab4c8 100%);
+  box-shadow: 0 0 10vmin 2vmin rgba(200, 214, 240, 0.4);
+}
+
+// Foreground silhouette — the sun/moon set and rise "behind" it.
+.ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 36%;
+  z-index: 3;
+  background: linear-gradient(180deg, #241f38, #100c1c);
+  box-shadow: 0 -1px 24px rgba(0, 0, 0, 0.35);
+}
+
+// ── Direction: to dark (sun sets, moon rises, stars appear) ──
+.scene[data-kind='theme-to-dark'] .sky {
+  animation: sky-to-dark 3s ease forwards;
+}
+.scene[data-kind='theme-to-dark'] .sun {
+  animation: disc-set 3s ease-in forwards;
+}
+.scene[data-kind='theme-to-dark'] .moon {
+  animation: disc-rise 3s ease-out forwards;
+}
+.scene[data-kind='theme-to-dark'] .stars {
+  animation: stars-in 3s ease forwards;
+}
+
+// ── Direction: to light (moon sets, sun rises, stars fade) ──
+.scene[data-kind='theme-to-light'] .sky {
+  animation: sky-to-light 3s ease forwards;
+}
+.scene[data-kind='theme-to-light'] .moon {
+  animation: disc-set 3s ease-in forwards;
+}
+.scene[data-kind='theme-to-light'] .sun {
+  animation: disc-rise 3s ease-out forwards;
+}
+.scene[data-kind='theme-to-light'] .stars {
+  animation: stars-out 3s ease forwards;
+}
+
+@keyframes sky-to-dark {
+  0% {
+    background: linear-gradient(180deg, #8ecae6 0%, #bfe0ef 55%, #ffd9a0 100%);
+  }
+  45% {
+    background: linear-gradient(180deg, #5b6fb0 0%, #b06a8f 60%, #ff9e6d 100%);
+  }
+  100% {
+    background: linear-gradient(180deg, #070b1f 0%, #131a3f 60%, #24305c 100%);
+  }
+}
+
+@keyframes sky-to-light {
+  0% {
+    background: linear-gradient(180deg, #070b1f 0%, #131a3f 60%, #24305c 100%);
+  }
+  45% {
+    background: linear-gradient(180deg, #5b6fb0 0%, #c98aa0 60%, #ffb27d 100%);
+  }
+  100% {
+    background: linear-gradient(180deg, #8ecae6 0%, #bfe0ef 55%, #ffe6c2 100%);
+  }
+}
+
+// A disc descending below the horizon and fading behind the ground.
+@keyframes disc-set {
+  0% {
+    top: 28%;
+    opacity: 1;
+  }
+  55% {
+    top: 60%;
+    opacity: 1;
+  }
+  78% {
+    top: 72%;
+    opacity: 0.9;
+  }
+  100% {
+    top: 80%;
+    opacity: 0.75;
+  }
+}
+
+// A disc emerging from behind the horizon and climbing.
+@keyframes disc-rise {
+  0% {
+    top: 80%;
+    opacity: 0;
+  }
+  45% {
+    top: 74%;
+    opacity: 0;
+  }
+  62% {
+    top: 58%;
+    opacity: 1;
+  }
+  100% {
+    top: 24%;
+    opacity: 1;
+  }
+}
+
+@keyframes stars-in {
+  0%,
+  42% {
+    opacity: 0;
+  }
+  72% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0.95;
+  }
+}
+
+@keyframes stars-out {
+  0% {
+    opacity: 0.95;
+  }
+  42% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// LANGUAGE SCENE — flag + autonym reveal
+// ─────────────────────────────────────────────────────────────
+.lang {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+}
+
+.lang__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  color: #fff;
+  animation: lang-pop 3s ease forwards;
+}
+
+.lang__flag {
+  width: clamp(84px, 18vmin, 140px);
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.lang__name {
+  font-size: clamp(1.75rem, 6vw, 2.75rem);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.01em;
+}
+
+@keyframes lang-pop {
+  0% {
+    transform: scale(0.6) translateY(10px);
+    opacity: 0;
+  }
+  22% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+  80% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.12) translateY(-6px);
+    opacity: 0;
+  }
+}

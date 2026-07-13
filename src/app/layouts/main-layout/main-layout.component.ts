@@ -9,6 +9,7 @@ import { BackgroundSceneComponent } from '@shared/components/background-scene/ba
 import { IconComponent } from '@shared/components/icon/icon.component';
 import { LanguageSwitcherComponent } from '@shared/components/language-switcher/language-switcher.component';
 import { ThemeToggleComponent } from '@shared/components/theme-toggle/theme-toggle.component';
+import { TransitionOverlayComponent } from '@shared/components/transition-overlay/transition-overlay.component';
 
 interface NavItem {
   id: string;
@@ -26,6 +27,7 @@ interface NavItem {
     ThemeToggleComponent,
     LanguageSwitcherComponent,
     BackgroundSceneComponent,
+    TransitionOverlayComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './main-layout.component.html',

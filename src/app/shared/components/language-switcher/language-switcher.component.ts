@@ -10,6 +10,7 @@ import {
 import { TranslocoModule } from '@jsverse/transloco';
 
 import { LanguageService } from '@core/services/language.service';
+import { TransitionService } from '@core/services/transition.service';
 import { AppLang } from '@models/index';
 
 interface LangOption {
@@ -29,6 +30,7 @@ interface LangOption {
 })
 export class LanguageSwitcherComponent {
   protected readonly language = inject(LanguageService);
+  private readonly transition = inject(TransitionService);
   private readonly host = inject(ElementRef<HTMLElement>);
 
   protected readonly options: LangOption[] = [
@@ -47,8 +49,17 @@ export class LanguageSwitcherComponent {
   }
 
   protected select(code: AppLang): void {
-    this.language.use(code);
     this.open.set(false);
+    if (code === this.language.lang()) {
+      return;
+    }
+    const option = this.options.find((o) => o.code === code);
+    this.transition.play({
+      kind: 'language',
+      apply: () => this.language.use(code),
+      flag: option?.flag,
+      label: option?.label,
+    });
   }
 
   /** Close when clicking anywhere outside the component. */

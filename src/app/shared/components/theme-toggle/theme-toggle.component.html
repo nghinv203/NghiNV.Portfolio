@@ -4,7 +4,7 @@
   [attr.aria-pressed]="theme.isDark()"
   [attr.aria-label]="'a11y.toggleTheme' | transloco"
   [title]="'a11y.toggleTheme' | transloco"
-  (click)="theme.toggle()"
+  (click)="toggle()"
 >
   @if (theme.isDark()) {
     <!-- moon -->
