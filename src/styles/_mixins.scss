@@ -46,6 +46,23 @@
   border: 0;
 }
 
+// Raised "3D block": surface panel with a stacked-edge shadow that lifts
+// on hover. Components can add their own padding/radius on top.
+@mixin card-3d {
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-3d);
+  transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease),
+    border-color var(--duration) var(--ease);
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-3d-hover);
+    border-color: color-mix(in srgb, var(--color-primary) 40%, transparent);
+  }
+}
+
 // Truncate to N lines.
 @mixin line-clamp($lines) {
   display: -webkit-box;

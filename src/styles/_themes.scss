@@ -30,6 +30,18 @@
   --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.08);
   --shadow-lg: 0 12px 32px rgba(16, 24, 40, 0.12);
 
+  // Raised "3D slab" — stacked hard edges + ambient shadow.
+  --shadow-3d:
+    0 6px 0 -1px var(--color-surface-hover),
+    0 7px 0 -1px var(--color-border),
+    0 18px 30px -12px rgba(16, 24, 40, 0.22);
+  --shadow-3d-hover:
+    0 12px 0 -1px var(--color-surface-hover),
+    0 13px 0 -1px var(--color-border),
+    0 28px 42px -14px rgba(16, 24, 40, 0.28);
+  // Decorative offset block behind the avatar frame.
+  --avatar-block: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+
   --skeleton-base: #e9ecf2;
   --skeleton-highlight: #f4f6f9;
 
@@ -60,6 +72,18 @@
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
   --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
+
+  // Raised "3D slab" — stacked hard edges + ambient shadow.
+  --shadow-3d:
+    0 6px 0 -1px var(--color-surface-hover),
+    0 7px 0 -1px var(--color-border),
+    0 18px 30px -12px rgba(0, 0, 0, 0.6);
+  --shadow-3d-hover:
+    0 12px 0 -1px var(--color-surface-hover),
+    0 13px 0 -1px var(--color-border),
+    0 28px 42px -14px rgba(0, 0, 0, 0.7);
+  // Decorative offset block behind the avatar frame.
+  --avatar-block: linear-gradient(135deg, var(--color-primary), var(--color-accent));
 
   --skeleton-base: #1e252e;
   --skeleton-highlight: #2a323d;

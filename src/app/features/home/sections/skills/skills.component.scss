@@ -16,9 +16,11 @@
 }
 
 .skills__group {
+  @include card-3d;
   display: grid;
-  gap: var(--space-3);
+  gap: var(--space-4);
   align-content: start;
+  padding: var(--space-6);
 }
 
 .skills__group-title {
