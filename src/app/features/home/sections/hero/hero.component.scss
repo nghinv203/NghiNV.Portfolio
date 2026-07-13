@@ -76,6 +76,8 @@
   height: clamp(140px, 30vw, 220px);
   border-radius: var(--radius-full);
   box-shadow: var(--shadow-lg);
+  object-fit: cover;
+  object-position: center top;
 }
 
 .hero__error {

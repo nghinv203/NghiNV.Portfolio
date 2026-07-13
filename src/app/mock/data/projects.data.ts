@@ -95,9 +95,9 @@ export const PROJECTS: ProjectDetail[] = [
     },
     gallery: ['/images/projects/cyber-threat-intel.svg'],
     role: {
-      en: 'Software engineer intern',
-      vi: 'Thực tập sinh kỹ sư phần mềm',
-      ja: 'ソフトウェアエンジニアインターン',
+      en: 'Software engineer',
+      vi: 'Kỹ sư phần mềm',
+      ja: 'ソフトウェアエンジニア',
     },
     solution: {
       en: 'Implemented chunked Excel import for up to 25,000 CVE records and a reusable, configurable table plus type-ahead search components.',

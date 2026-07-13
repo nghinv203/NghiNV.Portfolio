@@ -7,7 +7,7 @@ export const PROFILE: Profile = {
     vi: 'Lập trình viên phần mềm',
     ja: 'ソフトウェア開発者',
   },
-  avatarUrl: '/images/avatar.svg',
+  avatarUrl: '/images/avatar.jpg',
   bio: {
     en: 'Early-career software developer with ~1.5 years of professional experience building enterprise web applications with .NET, Angular and Vue, plus hands-on work in Golang. I enjoy backend APIs, asynchronous processing and reusable frontend components, and I apply clean architecture and SOLID principles in real projects. Eager to keep growing in backend development, performance optimization and system design.',
     vi: 'Lập trình viên phần mềm giai đoạn đầu sự nghiệp với khoảng 1.5 năm kinh nghiệm xây dựng các ứng dụng web doanh nghiệp bằng .NET, Angular và Vue, cùng kinh nghiệm thực tế với Golang. Tôi yêu thích backend API, xử lý bất đồng bộ và các component frontend tái sử dụng, đồng thời áp dụng clean architecture và nguyên lý SOLID trong dự án thực tế. Mong muốn tiếp tục phát triển về backend, tối ưu hiệu năng và thiết kế hệ thống.',

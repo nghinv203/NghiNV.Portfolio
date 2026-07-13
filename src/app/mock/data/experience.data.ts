@@ -55,9 +55,9 @@ export const EXPERIENCE: Experience[] = [
     id: 'exp-viettel',
     company: 'Viettel Software',
     role: {
-      en: 'Software Engineer Intern',
-      vi: 'Thực tập sinh Kỹ sư Phần mềm',
-      ja: 'ソフトウェアエンジニアインターン',
+      en: 'Software Engineer',
+      vi: 'Kỹ sư Phần mềm',
+      ja: 'ソフトウェアエンジニア',
     },
     startDate: '2025-01',
     endDate: '2025-10',
