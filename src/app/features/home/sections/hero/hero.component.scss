@@ -73,11 +73,30 @@
   }
 }
 
+.hero__stage {
+  position: relative;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: clamp(240px, 42vw, 400px);
+  aspect-ratio: 1;
+}
+
+// 3D scene fills the stage and sits behind the avatar. Kept within the
+// square so it never captures pointer events over the hero text/buttons.
+.hero__scene {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
 .hero__avatar-wrap {
   position: relative;
+  z-index: 1;
   flex-shrink: 0;
   isolation: isolate;
   transition: transform var(--duration) var(--ease);
+  pointer-events: none;
 
   // Decorative colored 3D block offset behind the photo — gives depth
   // and keeps the white-background portrait from blending into the page.
