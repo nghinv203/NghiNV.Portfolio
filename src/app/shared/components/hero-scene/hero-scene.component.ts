@@ -126,12 +126,12 @@ export class HeroSceneComponent {
 
     for (let i = 0; i < COUNT; i++) {
       const mesh = new THREE.Mesh(models[i].geometry, materials[i]);
-      const size = 0.55 + (i % 3) * 0.16;
+      const size = 0.5 + (i % 3) * 0.14;
       mesh.scale.setScalar(size);
 
       const angle = (i / COUNT) * Math.PI * 2;
-      const radius = 2.4 + (i % 3) * 0.5;
-      const baseY = Math.sin(i * 1.7) * 1.3;
+      const radius = 3.1 + (i % 3) * 0.45;
+      const baseY = Math.sin(i * 1.7) * 1.7;
       mesh.position.set(Math.cos(angle) * radius, baseY, Math.sin(angle) * radius);
       group.add(mesh);
 

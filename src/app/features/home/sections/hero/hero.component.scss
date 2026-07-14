@@ -78,7 +78,7 @@
   flex-shrink: 0;
   display: grid;
   place-items: center;
-  width: clamp(240px, 42vw, 400px);
+  width: clamp(280px, 48vw, 460px);
   aspect-ratio: 1;
 }
 
@@ -122,8 +122,8 @@
 
 .hero__avatar {
   display: block;
-  width: clamp(150px, 32vw, 240px);
-  height: clamp(150px, 32vw, 240px);
+  width: clamp(130px, 24vw, 190px);
+  height: clamp(130px, 24vw, 190px);
   border-radius: var(--radius-lg);
   object-fit: cover;
   object-position: center top;

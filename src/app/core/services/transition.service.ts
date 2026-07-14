@@ -11,8 +11,8 @@ export interface TransitionConfig {
   label?: string;
 }
 
-const DURATION = 3000;
-const APPLY_AT = 1400;
+const DURATION = 2000;
+const APPLY_AT = 900;
 
 /**
  * Drives the full-screen scene transitions used when switching theme or

@@ -1,5 +1,6 @@
-// Full-screen cinematic overlay for theme / language switches (~3s).
-// It covers the page while the change is applied underneath, then clears.
+// Full-screen cinematic overlay for theme / language switches.
+// $dur must match TransitionService.DURATION.
+$dur: 2s;
 
 .scene {
   position: fixed;
@@ -7,7 +8,7 @@
   z-index: 5000;
   overflow: hidden;
   pointer-events: auto;
-  animation: scene-fade 3s ease forwards;
+  animation: scene-fade $dur ease forwards;
 }
 
 // Opaque almost immediately (hides the swap), clears at the end (reveals it).
@@ -15,10 +16,10 @@
   0% {
     opacity: 0;
   }
-  6% {
+  7% {
     opacity: 1;
   }
-  86% {
+  85% {
     opacity: 1;
   }
   100% {
@@ -40,25 +41,65 @@
   z-index: 1;
   opacity: 0;
   background-image:
-    radial-gradient(1.5px 1.5px at 15% 20%, #fff, transparent),
-    radial-gradient(1.5px 1.5px at 35% 12%, #fff, transparent),
-    radial-gradient(1px 1px at 55% 25%, #fff, transparent),
-    radial-gradient(1.5px 1.5px at 72% 15%, #fff, transparent),
-    radial-gradient(1px 1px at 85% 28%, #fff, transparent),
-    radial-gradient(1px 1px at 25% 38%, #fff, transparent),
-    radial-gradient(1.5px 1.5px at 63% 40%, #fff, transparent),
-    radial-gradient(1px 1px at 45% 8%, #fff, transparent),
-    radial-gradient(1px 1px at 90% 45%, #fff, transparent),
-    radial-gradient(1px 1px at 8% 48%, #fff, transparent);
+    radial-gradient(1.6px 1.6px at 15% 20%, #fff, transparent),
+    radial-gradient(1.4px 1.4px at 35% 12%, #fff, transparent),
+    radial-gradient(1.1px 1.1px at 55% 25%, #fff, transparent),
+    radial-gradient(1.7px 1.7px at 72% 15%, #fff, transparent),
+    radial-gradient(1.1px 1.1px at 85% 28%, #fff, transparent),
+    radial-gradient(1.3px 1.3px at 25% 38%, #fff, transparent),
+    radial-gradient(1.6px 1.6px at 63% 40%, #fff, transparent),
+    radial-gradient(1.1px 1.1px at 45% 8%, #fff, transparent),
+    radial-gradient(1.2px 1.2px at 90% 45%, #fff, transparent),
+    radial-gradient(1.2px 1.2px at 8% 48%, #fff, transparent),
+    radial-gradient(1.4px 1.4px at 48% 32%, #fff, transparent),
+    radial-gradient(1.1px 1.1px at 78% 36%, #fff, transparent);
+}
+
+// Drifting clouds (day).
+.clouds {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.cloud {
+  position: absolute;
+  width: 20vmin;
+  height: 6vmin;
+  background: #fff;
+  border-radius: 6vmin;
+  opacity: 0.92;
+  filter: drop-shadow(0 2vmin 3vmin rgba(120, 140, 170, 0.25));
+  // Puffs built from offset box-shadows.
+  box-shadow:
+    4vmin -2.6vmin 0 -0.6vmin #fff,
+    8.5vmin -1vmin 0 -0.4vmin #fff,
+    -4vmin -1.4vmin 0 -1vmin #fff;
+}
+
+.cloud--1 {
+  top: 16%;
+  left: 12%;
+  transform: scale(0.9);
+}
+.cloud--2 {
+  top: 28%;
+  left: 58%;
+  transform: scale(1.15);
+}
+.cloud--3 {
+  top: 10%;
+  left: 74%;
+  transform: scale(0.7);
 }
 
 .sun,
 .moon {
   position: absolute;
   left: 50%;
-  width: 22vmin;
-  height: 22vmin;
-  margin-left: -11vmin;
+  width: 20vmin;
+  height: 20vmin;
+  margin-left: -10vmin;
   border-radius: 50%;
   z-index: 2;
 }
@@ -68,9 +109,11 @@
   box-shadow: 0 0 14vmin 3vmin rgba(255, 190, 90, 0.55);
 }
 
+// Crescent: a transparent disc with an inset shadow that leaves a sliver.
 .moon {
-  background: radial-gradient(circle at 38% 38%, #ffffff, #dfe6f2 55%, #aab4c8 100%);
-  box-shadow: 0 0 10vmin 2vmin rgba(200, 214, 240, 0.4);
+  background: transparent;
+  box-shadow: inset -5vmin -1.5vmin 0 0 #eef3ff;
+  filter: drop-shadow(0 0 2.4vmin rgba(200, 214, 240, 0.5));
 }
 
 // Foreground silhouette — the sun/moon set and rise "behind" it.
@@ -79,38 +122,44 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 36%;
+  height: 34%;
   z-index: 3;
   background: linear-gradient(180deg, #241f38, #100c1c);
   box-shadow: 0 -1px 24px rgba(0, 0, 0, 0.35);
 }
 
-// ── Direction: to dark (sun sets, moon rises, stars appear) ──
+// ── Direction: to dark (sun sets, moon rises, clouds fade, stars appear) ──
 .scene[data-kind='theme-to-dark'] .sky {
-  animation: sky-to-dark 3s ease forwards;
+  animation: sky-to-dark $dur ease forwards;
 }
 .scene[data-kind='theme-to-dark'] .sun {
-  animation: disc-set 3s ease-in forwards;
+  animation: disc-set $dur ease-in forwards;
 }
 .scene[data-kind='theme-to-dark'] .moon {
-  animation: disc-rise 3s ease-out forwards;
+  animation: disc-rise $dur ease-out forwards;
 }
 .scene[data-kind='theme-to-dark'] .stars {
-  animation: stars-in 3s ease forwards;
+  animation: stars-in $dur ease forwards;
+}
+.scene[data-kind='theme-to-dark'] .clouds {
+  animation: clouds-out $dur ease forwards;
 }
 
-// ── Direction: to light (moon sets, sun rises, stars fade) ──
+// ── Direction: to light (moon sets, sun rises, stars fade, clouds appear) ──
 .scene[data-kind='theme-to-light'] .sky {
-  animation: sky-to-light 3s ease forwards;
+  animation: sky-to-light $dur ease forwards;
 }
 .scene[data-kind='theme-to-light'] .moon {
-  animation: disc-set 3s ease-in forwards;
+  animation: disc-set $dur ease-in forwards;
 }
 .scene[data-kind='theme-to-light'] .sun {
-  animation: disc-rise 3s ease-out forwards;
+  animation: disc-rise $dur ease-out forwards;
 }
 .scene[data-kind='theme-to-light'] .stars {
-  animation: stars-out 3s ease forwards;
+  animation: stars-out $dur ease forwards;
+}
+.scene[data-kind='theme-to-light'] .clouds {
+  animation: clouds-in $dur ease forwards;
 }
 
 @keyframes sky-to-dark {
@@ -140,46 +189,46 @@
 // A disc descending below the horizon and fading behind the ground.
 @keyframes disc-set {
   0% {
-    top: 28%;
+    top: 26%;
     opacity: 1;
   }
   55% {
-    top: 60%;
+    top: 58%;
     opacity: 1;
   }
   78% {
-    top: 72%;
+    top: 70%;
     opacity: 0.9;
   }
   100% {
-    top: 80%;
-    opacity: 0.75;
+    top: 78%;
+    opacity: 0.7;
   }
 }
 
 // A disc emerging from behind the horizon and climbing.
 @keyframes disc-rise {
   0% {
-    top: 80%;
+    top: 78%;
     opacity: 0;
   }
-  45% {
-    top: 74%;
+  42% {
+    top: 72%;
     opacity: 0;
   }
-  62% {
-    top: 58%;
+  60% {
+    top: 56%;
     opacity: 1;
   }
   100% {
-    top: 24%;
+    top: 22%;
     opacity: 1;
   }
 }
 
 @keyframes stars-in {
   0%,
-  42% {
+  40% {
     opacity: 0;
   }
   72% {
@@ -194,11 +243,36 @@
   0% {
     opacity: 0.95;
   }
-  42% {
+  40% {
     opacity: 0.3;
   }
   100% {
     opacity: 0;
+  }
+}
+
+@keyframes clouds-out {
+  0% {
+    opacity: 0.92;
+  }
+  45% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes clouds-in {
+  0%,
+  45% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 0.92;
+  }
+  100% {
+    opacity: 0.92;
   }
 }
 
@@ -219,7 +293,7 @@
   align-items: center;
   gap: var(--space-5);
   color: #fff;
-  animation: lang-pop 3s ease forwards;
+  animation: lang-pop $dur ease forwards;
 }
 
 .lang__flag {
@@ -240,11 +314,11 @@
     transform: scale(0.6) translateY(10px);
     opacity: 0;
   }
-  22% {
+  24% {
     transform: scale(1) translateY(0);
     opacity: 1;
   }
-  80% {
+  78% {
     transform: scale(1) translateY(0);
     opacity: 1;
   }
