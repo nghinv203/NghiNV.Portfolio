@@ -82,13 +82,16 @@ export function buildTechModels(
         continue;
       }
 
+      // Kept deliberately low-poly: these models are small and always in
+      // motion, so extra tessellation only adds triangles and lengthens the
+      // (synchronous) build that both scenes run on the main thread at startup.
       const geometry = new THREE.ExtrudeGeometry(shapes, {
         depth: 6,
         bevelEnabled: true,
         bevelThickness: 1,
         bevelSize: 0.5,
-        bevelSegments: 2,
-        curveSegments: 8,
+        bevelSegments: 1,
+        curveSegments: 6,
       });
 
       // SVG space is y-down; flip to three's y-up, then normalise so every

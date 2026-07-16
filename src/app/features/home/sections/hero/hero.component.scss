@@ -76,6 +76,11 @@
 .hero__stage {
   position: relative;
   flex-shrink: 0;
+  // Center the square within the content column. On mobile (column layout)
+  // this keeps the avatar horizontally centered instead of hugging the left
+  // edge; on desktop (row layout) the cross axis is already centered, so this
+  // is a no-op there.
+  align-self: center;
   display: grid;
   place-items: center;
   width: clamp(280px, 48vw, 460px);

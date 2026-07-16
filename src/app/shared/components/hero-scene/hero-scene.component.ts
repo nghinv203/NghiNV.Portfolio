@@ -79,7 +79,9 @@ export class HeroSceneComponent {
     } catch {
       return; // No WebGL available — the scene is purely decorative, so bail quietly.
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    // 1.5 is plenty for this small stage; 2 doubled the fragment work for a
+    // difference that is invisible at this size.
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);

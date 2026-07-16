@@ -73,7 +73,10 @@ export class BackgroundSceneComponent {
     } catch {
       return;
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+    // Full-window canvas: pixel count scales with the (large) desktop window,
+    // so cap at 1 DPR. Extra device pixels here are the single biggest GPU cost
+    // and buy almost nothing on a soft, out-of-focus backdrop.
+    renderer.setPixelRatio(1);
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 100);
@@ -105,17 +108,17 @@ export class BackgroundSceneComponent {
       renderer.dispose();
       return;
     }
+    // Phong (not Standard/PBR) and opaque: a cheaper fragment shader and no
+    // transparency sort/blend pass. On a decorative backdrop the difference is
+    // imperceptible but the per-pixel cost drops sharply.
     const materials = models.map(
       (m) =>
-        new THREE.MeshStandardMaterial({
+        new THREE.MeshPhongMaterial({
           color: new THREE.Color(m.color),
           emissive: new THREE.Color(m.color),
           emissiveIntensity: 0.18,
-          metalness: 0.4,
-          roughness: 0.45,
+          shininess: 35,
           side: THREE.DoubleSide,
-          transparent: true,
-          opacity: 0.92,
         }),
     );
 
@@ -187,10 +190,21 @@ export class BackgroundSceneComponent {
       renderer.render(scene, camera);
     };
 
+    // Cap the backdrop to ~30fps. Its motion is slow, ambient drift that reads
+    // fine at 30, and halving the frame count roughly halves its GPU load —
+    // freeing headroom for the display to stay smooth. The accumulated dt is
+    // passed through so motion speed is unchanged regardless of refresh rate.
+    const MIN_FRAME = 1 / 30;
+    let acc = 0;
     const loop = (): void => {
-      const dt = Math.min(clock.getDelta(), 0.05);
-      renderFrame(dt);
       frame = requestAnimationFrame(loop);
+      const dt = Math.min(clock.getDelta(), 0.05);
+      acc += dt;
+      if (acc < MIN_FRAME) {
+        return;
+      }
+      renderFrame(acc);
+      acc = 0;
     };
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
