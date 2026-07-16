@@ -24,6 +24,12 @@
           <header class="detail__header">
             <p class="detail__year">{{ p.year }}</p>
             <h1 class="detail__title">{{ p.title }}</h1>
+            @if (p.company) {
+              <p class="detail__company">
+                <app-icon name="briefcase" [size]="16" />
+                {{ p.company }}
+              </p>
+            }
             <p class="detail__summary">{{ p.summary | localize: lang() }}</p>
 
             <div class="detail__links">

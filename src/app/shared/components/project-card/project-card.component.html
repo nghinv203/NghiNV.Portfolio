@@ -11,6 +11,12 @@
   </a>
 
   <div class="card__body">
+    @if (project().company) {
+      <p class="card__company">
+        <app-icon name="briefcase" [size]="14" />
+        {{ project().company }}
+      </p>
+    }
     <h3 class="card__title">
       <a [routerLink]="[detailBase, project().slug]">{{ project().title }}</a>
     </h3>

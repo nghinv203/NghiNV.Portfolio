@@ -12,7 +12,8 @@ export type IconName =
   | 'map-pin'
   | 'download'
   | 'phone'
-  | 'check';
+  | 'check'
+  | 'briefcase';
 
 /** Stroke-based icon paths (24×24, currentColor). */
 const PATHS: Record<IconName, string> = {
@@ -31,6 +32,8 @@ const PATHS: Record<IconName, string> = {
   phone:
     'M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z',
   check: 'M20 6 9 17l-5-5',
+  briefcase:
+    'M4 7h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1zM8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18',
 };
 
 @Component({

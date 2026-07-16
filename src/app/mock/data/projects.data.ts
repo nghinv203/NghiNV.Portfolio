@@ -46,7 +46,7 @@ export const PROJECTS: ProjectDetail[] = [
   {
     id: 'p-ezcloud-hotel',
     slug: 'ezcloud-hotel',
-    title: 'ezCloud Hotel Management',
+    title: 'ezFolio',
     summary: {
       en: 'A comprehensive hotel management platform with real-time dual-screen invoicing over SignalR.',
       vi: 'Nền tảng quản lý khách sạn toàn diện với màn hình đôi hóa đơn thời gian thực qua SignalR.',
@@ -57,6 +57,7 @@ export const PROJECTS: ProjectDetail[] = [
     featured: true,
     links: {},
     year: 2025,
+    company: 'ezCloud Technologies Pte Ltd',
     description: {
       en: 'A management solution for 3–5 star hotels covering restaurant, bar, golf course and room-by-room power management, where I contributed reporting, reservation restoration and real-time features.',
       vi: 'Giải pháp quản lý cho khách sạn 3–5 sao gồm nhà hàng, bar, sân golf và quản lý điện từng phòng, nơi tôi đóng góp các tính năng báo cáo, khôi phục đặt phòng và thời gian thực.',
@@ -77,7 +78,7 @@ export const PROJECTS: ProjectDetail[] = [
   {
     id: 'p-cyber-intel',
     slug: 'cyber-threat-intel',
-    title: 'Cyber Threat Intelligence Platform',
+    title: 'Viettel Threat Intelligence',
     summary: {
       en: 'A cybersecurity intelligence platform for early risk detection and CVE analysis.',
       vi: 'Nền tảng thông tin an ninh mạng để phát hiện rủi ro sớm và phân tích CVE.',
@@ -88,6 +89,7 @@ export const PROJECTS: ProjectDetail[] = [
     featured: false,
     links: {},
     year: 2025,
+    company: 'Viettel Software',
     description: {
       en: 'A platform enabling early risk detection and proactive defense, where I built reusable UI components and CVE data pipelines handling large Excel imports.',
       vi: 'Nền tảng giúp phát hiện rủi ro sớm và phòng thủ chủ động, nơi tôi xây dựng các component UI tái sử dụng và pipeline dữ liệu CVE xử lý import Excel lớn.',

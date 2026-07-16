@@ -10,6 +10,8 @@ export interface Project {
   featured: boolean;
   links: { demo?: string; repo?: string };
   year: number;
+  /** Company the project was built at. Omitted for personal/academic work. */
+  company?: string;
 }
 
 /** Full project record used on the detail page (fetched by slug). */
