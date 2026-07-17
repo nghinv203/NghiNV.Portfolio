@@ -10,6 +10,8 @@ import { ErrorStateComponent } from '@shared/components/error-state/error-state.
 import { SectionHeaderComponent } from '@shared/components/section-header/section-header.component';
 import { SkeletonComponent } from '@shared/components/skeleton/skeleton.component';
 
+import { SKILL_ICONS, SkillIcon } from './skill-icons';
+
 interface SkillGroup {
   category: SkillCategory;
   labelKey: string;
@@ -53,4 +55,9 @@ export class SkillsComponent {
       items: skills.filter((s) => s.category === category),
     })).filter((group) => group.items.length > 0);
   });
+
+  /** Brand logo for a skill, or null to fall back to a generic glyph. */
+  protected iconFor(id: string): SkillIcon | null {
+    return SKILL_ICONS[id] ?? null;
+  }
 }

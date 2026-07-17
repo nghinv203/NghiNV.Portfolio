@@ -33,7 +33,37 @@
               <h3 class="skills__group-title">{{ group.labelKey | transloco }}</h3>
               <ul class="skills__tags" role="list">
                 @for (skill of group.items; track skill.id) {
-                  <li class="skills__tag" [class.is-featured]="skill.featured">{{ skill.name }}</li>
+                  <li class="skills__tag" [class.is-featured]="skill.featured">
+                    @if (iconFor(skill.id); as icon) {
+                      <svg class="skills__icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                        <path
+                          [attr.d]="icon.path"
+                          [attr.fill]="icon.mode === 'stroke' ? 'none' : icon.color"
+                          [attr.stroke]="icon.mode === 'stroke' ? icon.color : null"
+                          [attr.stroke-width]="icon.mode === 'stroke' ? 1.8 : null"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    } @else {
+                      <svg
+                        class="skills__icon skills__icon--generic"
+                        viewBox="0 0 24 24"
+                        width="16"
+                        height="16"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M12 2 3 7v10l9 5 9-5V7z"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    }
+                    <span>{{ skill.name }}</span>
+                  </li>
                 }
               </ul>
             </div>
