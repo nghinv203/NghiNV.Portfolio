@@ -83,6 +83,12 @@ export class ThemeSceneComponent {
     if (!ctx) {
       return;
     }
+    // Offscreen layer for the crescent (carved with destination-out).
+    const moonCanvas = document.createElement('canvas');
+    const mctx = moonCanvas.getContext('2d');
+    if (!mctx) {
+      return;
+    }
     const toDark = this.toDark();
 
     let W = 0;
@@ -120,14 +126,7 @@ export class ThemeSceneComponent {
       frontPts = line(0.02, 0.18);
     };
 
-    const skyAt = (y: number, night: number): RGB =>
-      mix(
-        mix(SKY_TOP[0], SKY_TOP[1], night),
-        mix(SKY_HORIZON[0], SKY_HORIZON[1], night),
-        clamp01(y / waterline),
-      );
-
-    const disc = (x: number, y: number, r: number, color: RGB, alpha: number, moon: boolean, night: number): void => {
+    const disc = (x: number, y: number, r: number, color: RGB, alpha: number): void => {
       if (alpha <= 0.01) {
         return;
       }
@@ -146,14 +145,44 @@ export class ThemeSceneComponent {
       ctx.beginPath();
       ctx.arc(x, y, r, 0, Math.PI * 2);
       ctx.fill();
-      if (moon) {
-        // Carve a crescent using the local sky colour.
-        ctx.globalAlpha = alpha;
-        ctx.fillStyle = rgb(skyAt(y, night));
-        ctx.beginPath();
-        ctx.arc(x + r * 0.5, y - r * 0.28, r * 0.92, 0, Math.PI * 2);
-        ctx.fill();
+      ctx.restore();
+    };
+
+    // The crescent is built on an offscreen layer and carved with
+    // destination-out, so the bitten side is genuinely transparent (no solid
+    // fill circle). Its lake reflection therefore mirrors a real crescent
+    // rather than merging into a full disc.
+    const drawMoon = (x: number, y: number, r: number, alpha: number): void => {
+      if (alpha <= 0.01) {
+        return;
       }
+      const c = Math.ceil(r * 2.4);
+      moonCanvas.width = c * 2; // resizing also clears the layer
+      moonCanvas.height = c * 2;
+
+      const glow = mctx.createRadialGradient(c, c, r * 0.6, c, c, r * 2);
+      glow.addColorStop(0, rgb(MOON, 0.4));
+      glow.addColorStop(1, rgb(MOON, 0));
+      mctx.fillStyle = glow;
+      mctx.beginPath();
+      mctx.arc(c, c, r * 2, 0, Math.PI * 2);
+      mctx.fill();
+
+      mctx.fillStyle = rgb(MOON);
+      mctx.beginPath();
+      mctx.arc(c, c, r, 0, Math.PI * 2);
+      mctx.fill();
+
+      // Bite out the crescent.
+      mctx.globalCompositeOperation = 'destination-out';
+      mctx.beginPath();
+      mctx.arc(c + r * 0.55, c - r * 0.28, r * 0.98, 0, Math.PI * 2);
+      mctx.fill();
+      mctx.globalCompositeOperation = 'source-over';
+
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.drawImage(moonCanvas, x - c, y - c);
       ctx.restore();
     };
 
@@ -216,8 +245,8 @@ export class ThemeSceneComponent {
       const r = Math.min(W, H) * 0.07;
       const high = H * 0.2;
       const low = waterline + r * 0.6;
-      disc(W * 0.42, lerp(high, low, night), r, SUN, clamp01(1.15 - night * 1.5), false, night);
-      disc(W * 0.6, lerp(low, high, night), r, MOON, clamp01(night * 1.5 - 0.35), true, night);
+      disc(W * 0.42, lerp(high, low, night), r, SUN, clamp01(1.15 - night * 1.5));
+      drawMoon(W * 0.6, lerp(low, high, night), r, clamp01(night * 1.5 - 0.35));
 
       // Mountains.
       range(backPts, mix(MTN_BACK[0], MTN_BACK[1], night));
