@@ -1,0 +1,71 @@
+<svg
+  class="goat"
+  viewBox="0 0 120 124"
+  [attr.width]="size()"
+  [attr.height]="size() * 124 / 120"
+  aria-hidden="true"
+  focusable="false"
+>
+  <defs>
+    <radialGradient id="goat-fur" cx="38%" cy="28%" r="75%">
+      <stop offset="0" stop-color="#fffdf6" />
+      <stop offset="0.65" stop-color="#f3ecd9" />
+      <stop offset="1" stop-color="#dccfae" />
+    </radialGradient>
+    <radialGradient id="goat-muzzle" cx="40%" cy="25%" r="80%">
+      <stop offset="0" stop-color="#fff7ee" />
+      <stop offset="1" stop-color="#efd9c2" />
+    </radialGradient>
+    <linearGradient id="goat-horn" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e0bd82" />
+      <stop offset="1" stop-color="#b98f52" />
+    </linearGradient>
+  </defs>
+
+  <!-- horns -->
+  <g class="goat__horns">
+    <path d="M45 40 C34 26 40 10 30 4 C50 4 58 24 56 40 Z" fill="url(#goat-horn)" />
+    <path
+      d="M45 40 C34 26 40 10 30 4 C50 4 58 24 56 40 Z"
+      fill="url(#goat-horn)"
+      transform="translate(120 0) scale(-1 1)"
+    />
+  </g>
+
+  <!-- ears -->
+  <g class="goat__ear goat__ear--l">
+    <ellipse cx="21" cy="58" rx="16" ry="8" transform="rotate(-24 21 58)" fill="url(#goat-fur)" />
+    <ellipse cx="22" cy="58" rx="10" ry="4.5" transform="rotate(-24 22 58)" fill="#f6b8b0" />
+  </g>
+  <g class="goat__ear goat__ear--r">
+    <ellipse cx="99" cy="58" rx="16" ry="8" transform="rotate(24 99 58)" fill="url(#goat-fur)" />
+    <ellipse cx="98" cy="58" rx="10" ry="4.5" transform="rotate(24 98 58)" fill="#f6b8b0" />
+  </g>
+
+  <!-- beard -->
+  <path d="M51 92 C52 112 58 118 60 118 C62 118 68 112 69 92 Z" fill="#efe6cf" />
+
+  <!-- head -->
+  <ellipse cx="60" cy="64" rx="36" ry="33" fill="url(#goat-fur)" />
+
+  <!-- muzzle -->
+  <ellipse cx="60" cy="80" rx="21" ry="15" fill="url(#goat-muzzle)" />
+  <ellipse cx="53" cy="76" rx="2.6" ry="2" fill="#c7867f" />
+  <ellipse cx="67" cy="76" rx="2.6" ry="2" fill="#c7867f" />
+  <path d="M53 84 Q60 90 67 84" fill="none" stroke="#a8665f" stroke-width="2.4" stroke-linecap="round" />
+
+  <!-- cheeks -->
+  <ellipse cx="38" cy="74" rx="6" ry="4" fill="#f6a8a0" opacity="0.55" />
+  <ellipse cx="82" cy="74" rx="6" ry="4" fill="#f6a8a0" opacity="0.55" />
+
+  <!-- eyes -->
+  <g class="goat__eyes">
+    <ellipse cx="46" cy="60" rx="5.2" ry="6.4" fill="#23301f" />
+    <ellipse cx="74" cy="60" rx="5.2" ry="6.4" fill="#23301f" />
+    <circle cx="47.8" cy="57.6" r="1.8" fill="#fff" />
+    <circle cx="75.8" cy="57.6" r="1.8" fill="#fff" />
+  </g>
+
+  <!-- forehead highlight for the clay sheen -->
+  <ellipse cx="46" cy="42" rx="14" ry="6" fill="#fff" opacity="0.35" transform="rotate(-18 46 42)" />
+</svg>

@@ -1,17 +1,66 @@
+// Container-sized so the ring radius and chip size follow the hero stage.
 :host {
   display: block;
   width: 100%;
   height: 100%;
-  cursor: grab;
-  touch-action: pan-y;
+  container-type: size;
+  pointer-events: none;
 }
 
-:host(:active) {
-  cursor: grabbing;
-}
+$orbit-duration: 48s;
 
-.scene__canvas {
-  display: block;
+.orbit {
+  position: relative;
   width: 100%;
   height: 100%;
+  animation: orbit-spin $orbit-duration linear infinite;
+  will-change: transform;
+}
+
+// Each slot is parked at its angle on the ring; the chip inside counter-rotates
+// so logos always stay upright while the ring turns.
+.orbit__slot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform: rotate(var(--a)) translateX(41cqmin);
+}
+
+.orbit__chip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: clamp(40px, 12cqmin, 58px);
+  aspect-ratio: 1;
+  margin: calc(clamp(40px, 12cqmin, 58px) / -2) 0 0 calc(clamp(40px, 12cqmin, 58px) / -2);
+  border-radius: 38%;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-3d-sm);
+  scale: var(--s);
+  animation: orbit-unspin $orbit-duration linear infinite;
+
+  svg {
+    width: 52%;
+    height: 52%;
+  }
+}
+
+@keyframes orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Cancels both the ring's spin and the slot's resting angle.
+@keyframes orbit-unspin {
+  from {
+    transform: rotate(calc(var(--a) * -1));
+  }
+  to {
+    transform: rotate(calc(var(--a) * -1 - 360deg));
+  }
 }

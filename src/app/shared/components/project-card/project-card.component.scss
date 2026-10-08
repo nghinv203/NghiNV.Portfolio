@@ -11,7 +11,10 @@
   display: block;
   aspect-ratio: 16 / 10;
   overflow: hidden;
+  margin: var(--space-3) var(--space-3) 0;
+  border-radius: var(--radius-md);
   background-color: var(--color-surface-hover);
+  box-shadow: var(--shadow-inset);
 }
 
 .card__thumb {

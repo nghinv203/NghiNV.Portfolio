@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { TransitionService } from '@core/services/transition.service';
+import { MascotComponent } from '@shared/components/mascot/mascot.component';
 import { ThemeSceneComponent } from './theme-scene.component';
 
 /**
@@ -12,7 +13,7 @@ import { ThemeSceneComponent } from './theme-scene.component';
 @Component({
   selector: 'app-transition-overlay',
   standalone: true,
-  imports: [ThemeSceneComponent],
+  imports: [ThemeSceneComponent, MascotComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './transition-overlay.component.html',
   styleUrl: './transition-overlay.component.scss',

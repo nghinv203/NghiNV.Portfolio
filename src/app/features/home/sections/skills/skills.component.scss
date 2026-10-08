@@ -49,9 +49,9 @@
   color: var(--color-text);
 
   &.is-featured {
-    background-color: color-mix(in srgb, var(--color-primary) 12%, var(--color-surface));
-    border-color: color-mix(in srgb, var(--color-primary) 40%, transparent);
+    background-color: color-mix(in srgb, var(--color-accent) 35%, var(--color-surface));
     color: var(--color-primary);
+    font-weight: var(--weight-bold);
   }
 }
 

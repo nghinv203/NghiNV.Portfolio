@@ -1,102 +1,114 @@
 // ─────────────────────────────────────────────────────────────
-// SEMANTIC COLOR TOKENS PER THEME
-// Components reference these var(--color-*) names only — never raw
-// hex. Switching [data-theme] on <html> swaps the whole palette.
+// SEMANTIC COLOR TOKENS PER THEME — green claymorphism
+// Components reference these var(--*) names only — never raw hex.
+// Clay = soft matte material: a top inner highlight, a bottom inner
+// shade and a wide, soft, green-tinted drop shadow. No hard borders.
 // Light is the default (applies to :root and [data-theme="light"]).
 // ─────────────────────────────────────────────────────────────
+
+// Shared clay shadow recipes. $hi/$lo/$drop are the theme-specific tints.
+@mixin clay-shadows($hi, $lo, $drop) {
+  // Large raised panel.
+  --shadow-3d:
+    0 22px 34px -14px #{$drop}, 0 8px 14px -6px #{$drop}, inset 0 6px 10px #{$hi},
+    inset 0 -10px 16px #{$lo};
+  --shadow-3d-hover:
+    0 30px 44px -14px #{$drop}, 0 12px 18px -6px #{$drop}, inset 0 6px 10px #{$hi},
+    inset 0 -10px 16px #{$lo};
+  // Compact clay for chips, pills, inputs and small buttons.
+  --shadow-3d-sm:
+    0 10px 16px -8px #{$drop}, 0 3px 6px -2px #{$drop}, inset 0 3px 5px #{$hi},
+    inset 0 -4px 7px #{$lo};
+  --shadow-3d-sm-hover:
+    0 14px 20px -8px #{$drop}, 0 4px 8px -2px #{$drop}, inset 0 3px 5px #{$hi},
+    inset 0 -4px 7px #{$lo};
+  // Pressed-in clay (inputs, active states).
+  --shadow-inset: inset 0 4px 8px #{$lo}, inset 0 -3px 6px #{$hi};
+  // Solid green clay button.
+  --shadow-btn:
+    0 12px 18px -8px color-mix(in srgb, var(--color-primary) 70%, #000),
+    inset 0 4px 6px rgba(255, 255, 255, 0.35), inset 0 -6px 10px rgba(0, 0, 0, 0.2);
+  --shadow-btn-hover:
+    0 16px 22px -8px color-mix(in srgb, var(--color-primary) 70%, #000),
+    inset 0 4px 6px rgba(255, 255, 255, 0.4), inset 0 -6px 10px rgba(0, 0, 0, 0.2);
+  --shadow-btn-active:
+    0 4px 8px -4px color-mix(in srgb, var(--color-primary) 70%, #000),
+    inset 0 4px 10px rgba(0, 0, 0, 0.25);
+}
 
 @mixin light-theme {
   color-scheme: light;
 
-  --color-bg: #ffffff;
-  --color-bg-subtle: #f7f8fa;
-  --color-surface: #ffffff;
-  --color-surface-hover: #f0f2f5;
-  --color-border: #e4e7ec;
+  --color-bg: #e6f3df;
+  --color-bg-subtle: #dcedd3;
+  --color-surface: #f4fbef;
+  --color-surface-hover: #ffffff;
+  --color-border: #cfe4c5;
 
-  --color-text: #1a1d23;
-  --color-text-muted: #5b616e;
-  --color-text-subtle: #8a90a0;
+  --color-text: #14301f;
+  --color-text-muted: #3f5e49;
+  --color-text-subtle: #587a63;
 
-  --color-primary: #4f46e5;
-  --color-primary-hover: #4338ca;
+  --color-primary: #17803f;
+  --color-primary-hover: #126a34;
   --color-primary-contrast: #ffffff;
-  --color-accent: #0891b2;
+  --color-accent: #8bd44a;
 
-  --color-success: #16a34a;
-  --color-danger: #dc2626;
+  --color-success: #15803d;
+  --color-danger: #c62828;
 
-  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.1);
-  --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.08);
-  --shadow-lg: 0 12px 32px rgba(16, 24, 40, 0.12);
+  --shadow-sm: 0 2px 6px rgba(24, 90, 48, 0.14);
+  --shadow-md: 0 8px 20px -6px rgba(24, 90, 48, 0.22);
+  --shadow-lg: 0 18px 36px -10px rgba(24, 90, 48, 0.3);
 
-  // Raised "3D slab" — stacked hard edges + ambient shadow.
-  --shadow-3d:
-    0 6px 0 -1px var(--color-surface-hover),
-    0 7px 0 -1px var(--color-border),
-    0 18px 30px -12px rgba(16, 24, 40, 0.22);
-  --shadow-3d-hover:
-    0 12px 0 -1px var(--color-surface-hover),
-    0 13px 0 -1px var(--color-border),
-    0 28px 42px -14px rgba(16, 24, 40, 0.28);
-  // Compact 3D edge for chips, pills, inputs and small buttons.
-  --shadow-3d-sm: 0 3px 0 -1px var(--color-border), 0 5px 10px -6px rgba(16, 24, 40, 0.2);
-  --shadow-3d-sm-hover: 0 5px 0 -1px var(--color-border), 0 10px 16px -8px rgba(16, 24, 40, 0.26);
-  // Colored extrusion under solid/primary buttons.
-  --btn-edge: color-mix(in srgb, var(--color-primary) 62%, #000);
-  // Decorative offset block behind the avatar frame.
-  --avatar-block: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  @include clay-shadows(rgba(255, 255, 255, 0.9), rgba(24, 90, 48, 0.13), rgba(24, 90, 48, 0.28));
 
-  --skeleton-base: #e9ecf2;
-  --skeleton-highlight: #f4f6f9;
+  // Clay backdrop blobs + avatar plate.
+  --blob-a: #b6e39a;
+  --blob-b: #8bd44a;
+  --blob-c: #6cc08a;
+  --avatar-block: linear-gradient(145deg, var(--color-accent), var(--color-primary));
 
-  --overlay: rgba(16, 24, 40, 0.4);
+  --skeleton-base: #d3e8c8;
+  --skeleton-highlight: #e8f5e1;
+
+  --overlay: rgba(20, 60, 32, 0.4);
 }
 
 @mixin dark-theme {
   color-scheme: dark;
 
-  --color-bg: #0d1117;
-  --color-bg-subtle: #12181f;
-  --color-surface: #161b22;
-  --color-surface-hover: #1e252e;
-  --color-border: #262d38;
+  --color-bg: #0e1c14;
+  --color-bg-subtle: #12261a;
+  --color-surface: #1b3023;
+  --color-surface-hover: #24402f;
+  --color-border: #2a4636;
 
-  --color-text: #e6edf3;
-  --color-text-muted: #9aa4b2;
-  --color-text-subtle: #6b7280;
+  --color-text: #e4f4e8;
+  --color-text-muted: #a6c4b0;
+  --color-text-subtle: #84a590;
 
-  --color-primary: #818cf8;
-  --color-primary-hover: #a5b4fc;
-  --color-primary-contrast: #0d1117;
-  --color-accent: #22d3ee;
+  --color-primary: #5fd68a;
+  --color-primary-hover: #82e3a5;
+  --color-primary-contrast: #0a1a10;
+  --color-accent: #b6e36a;
 
-  --color-success: #4ade80;
-  --color-danger: #f87171;
+  --color-success: #5fd68a;
+  --color-danger: #ff8a80;
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 20px -6px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 18px 36px -10px rgba(0, 0, 0, 0.6);
 
-  // Raised "3D slab" — stacked hard edges + ambient shadow.
-  --shadow-3d:
-    0 6px 0 -1px var(--color-surface-hover),
-    0 7px 0 -1px var(--color-border),
-    0 18px 30px -12px rgba(0, 0, 0, 0.6);
-  --shadow-3d-hover:
-    0 12px 0 -1px var(--color-surface-hover),
-    0 13px 0 -1px var(--color-border),
-    0 28px 42px -14px rgba(0, 0, 0, 0.7);
-  // Compact 3D edge for chips, pills, inputs and small buttons.
-  --shadow-3d-sm: 0 3px 0 -1px var(--color-border), 0 5px 10px -6px rgba(0, 0, 0, 0.55);
-  --shadow-3d-sm-hover: 0 5px 0 -1px var(--color-border), 0 10px 16px -8px rgba(0, 0, 0, 0.65);
-  // Colored extrusion under solid/primary buttons.
-  --btn-edge: color-mix(in srgb, var(--color-primary) 55%, #000);
-  // Decorative offset block behind the avatar frame.
-  --avatar-block: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  @include clay-shadows(rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.55));
 
-  --skeleton-base: #1e252e;
-  --skeleton-highlight: #2a323d;
+  --blob-a: #1f4a30;
+  --blob-b: #2f6b3f;
+  --blob-c: #1c5a49;
+  --avatar-block: linear-gradient(145deg, var(--color-accent), var(--color-primary));
+
+  --skeleton-base: #1f382a;
+  --skeleton-highlight: #2b4a38;
 
   --overlay: rgba(0, 0, 0, 0.6);
 }

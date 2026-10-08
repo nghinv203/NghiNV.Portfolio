@@ -5,7 +5,7 @@ body {
   font-size: var(--text-base);
   font-weight: var(--weight-normal);
   color: var(--color-text);
-  // Transparent so the fixed 3D background canvas shows through the page.
+  // Transparent so the fixed clay-blob backdrop shows through the page.
   background-color: transparent;
 }
 
@@ -14,7 +14,7 @@ h2,
 h3,
 h4 {
   line-height: var(--leading-tight);
-  font-weight: var(--weight-bold);
+  font-weight: 800;
   color: var(--color-text);
   text-wrap: balance;
 }

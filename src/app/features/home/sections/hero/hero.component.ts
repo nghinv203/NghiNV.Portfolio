@@ -7,13 +7,14 @@ import { ProfileStore } from '@core/services/profile.store';
 import { SECTION_IDS } from '@core/constants/routes';
 import { HeroSceneComponent } from '@shared/components/hero-scene/hero-scene.component';
 import { IconComponent } from '@shared/components/icon/icon.component';
+import { MascotComponent } from '@shared/components/mascot/mascot.component';
 import { SkeletonComponent } from '@shared/components/skeleton/skeleton.component';
 import { LocalizePipe } from '@shared/pipes/localize.pipe';
 
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [RouterLink, TranslocoModule, LocalizePipe, IconComponent, SkeletonComponent, HeroSceneComponent],
+  imports: [RouterLink, TranslocoModule, LocalizePipe, IconComponent, SkeletonComponent, HeroSceneComponent, MascotComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.scss',

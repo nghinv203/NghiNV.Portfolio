@@ -4,11 +4,12 @@ import { RouterLink } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 
 import { SeoService } from '@core/services/seo.service';
+import { MascotComponent } from '@shared/components/mascot/mascot.component';
 
 @Component({
   selector: 'app-not-found',
   standalone: true,
-  imports: [RouterLink, TranslocoModule],
+  imports: [RouterLink, TranslocoModule, MascotComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './not-found.component.html',
   styleUrl: './not-found.component.scss',

@@ -5,13 +5,68 @@
   inset: 0;
   z-index: -1;
   display: block;
+  overflow: hidden;
   pointer-events: none;
-  // Kept subtle so it animates behind text without hurting readability.
-  opacity: 0.6;
 }
 
-.bg-scene__canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
+.bg {
+  position: absolute;
+  inset: 0;
 }
+
+// Clay blob: pillowy shape with the same highlight/shade recipe as the UI.
+.bg__blob {
+  position: absolute;
+  background-color: var(--blob-a);
+  box-shadow: var(--shadow-3d);
+  opacity: 0.6;
+  animation: blob-drift 26s ease-in-out infinite alternate;
+
+  &--a {
+    top: -8vmax;
+    left: -10vmax;
+    width: 22vmax; height: 20vmax;
+    border-radius: 58% 42% 55% 45% / 50% 55% 45% 50%;
+  }
+
+  &--b {
+    top: 32vh;
+    right: -12vmax;
+    width: 18vmax; height: 18vmax;
+    border-radius: 45% 55% 40% 60% / 55% 45% 55% 45%;
+    background-color: var(--blob-b);
+    animation-duration: 32s;
+    animation-delay: -8s;
+  }
+
+  &--c {
+    bottom: -12vmax;
+    left: 12vw;
+    width: 20vmax; height: 17vmax;
+    border-radius: 50% 50% 45% 55% / 60% 40% 60% 40%;
+    background-color: var(--blob-c);
+    animation-duration: 38s;
+    animation-delay: -14s;
+  }
+
+  &--d {
+    top: 58vh;
+    left: -4vmax;
+    width: 10vmax;
+    height: 10vmax;
+    border-radius: 50%;
+    background-color: var(--blob-b);
+    animation-duration: 22s;
+    animation-delay: -4s;
+  }
+}
+
+@keyframes blob-drift {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+  100% {
+    transform: translate3d(3vmax, -4vmax, 0) rotate(14deg) scale(1.06);
+  }
+}
+

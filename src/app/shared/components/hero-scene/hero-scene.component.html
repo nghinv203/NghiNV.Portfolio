@@ -1,1 +1,11 @@
-<canvas #canvas class="scene__canvas" aria-hidden="true" role="presentation"></canvas>
+<div class="orbit" aria-hidden="true">
+  @for (chip of chips; track chip.title) {
+    <span class="orbit__slot" [style.--a]="chip.angle + 'deg'" [style.--s]="chip.scale">
+      <span class="orbit__chip" [attr.title]="chip.title">
+        <svg viewBox="0 0 24 24" focusable="false">
+          <path [attr.d]="chip.path" [attr.fill]="chip.color" />
+        </svg>
+      </span>
+    </span>
+  }
+</div>

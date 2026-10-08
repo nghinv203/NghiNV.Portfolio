@@ -49,53 +49,70 @@
 // Raised "3D block": surface panel with a stacked-edge shadow that lifts
 // on hover. Components can add their own padding/radius on top.
 @mixin card-3d {
-  border: 1px solid var(--color-border);
   background-color: var(--color-surface);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-3d);
-  transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease),
-    border-color var(--duration) var(--ease);
+  transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
 
   &:hover {
     transform: translateY(-6px);
     box-shadow: var(--shadow-3d-hover);
-    border-color: color-mix(in srgb, var(--color-primary) 40%, transparent);
   }
 }
 
-// Compact 3D chip/pill: raised surface that lifts slightly on hover.
+// Compact clay chip/pill: soft raised surface that lifts slightly on hover.
 @mixin chip-3d {
-  border: 1px solid var(--color-border);
   background-color: var(--color-surface);
   box-shadow: var(--shadow-3d-sm);
   transition: transform var(--duration-fast) var(--ease), box-shadow var(--duration-fast) var(--ease),
-    border-color var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease);
+    color var(--duration-fast) var(--ease);
 
   &:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-3d-sm-hover);
-    border-color: color-mix(in srgb, var(--color-primary) 45%, transparent);
   }
 }
 
-// Round 3D icon button (theme toggle, socials, menu). Presses in on click.
+// Round clay icon button (theme toggle, socials, menu). Squishes on click.
 @mixin icon-3d {
-  border: 1px solid var(--color-border);
   background-color: var(--color-surface);
   box-shadow: var(--shadow-3d-sm);
   transition: transform var(--duration-fast) var(--ease), box-shadow var(--duration-fast) var(--ease),
-    color var(--duration-fast) var(--ease), border-color var(--duration-fast) var(--ease);
+    color var(--duration-fast) var(--ease);
 
   &:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-3d-sm-hover);
     color: var(--color-primary);
-    border-color: color-mix(in srgb, var(--color-primary) 45%, transparent);
   }
 
   &:active {
-    transform: translateY(1px);
-    box-shadow: var(--shadow-sm);
+    transform: translateY(1px) scale(0.96);
+    box-shadow: var(--shadow-inset);
+  }
+}
+
+// Solid green clay button surface (used by .btn--primary and one-off CTAs).
+@mixin btn-clay {
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--color-primary) 82%, #fff),
+    var(--color-primary)
+  );
+  color: var(--color-primary-contrast);
+  box-shadow: var(--shadow-btn);
+  transition: transform var(--duration-fast) var(--ease), box-shadow var(--duration-fast) var(--ease),
+    filter var(--duration-fast) var(--ease);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-btn-hover);
+    filter: brightness(1.05);
+  }
+
+  &:active {
+    transform: translateY(1px) scale(0.97);
+    box-shadow: var(--shadow-btn-active);
   }
 }
 

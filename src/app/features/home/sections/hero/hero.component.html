@@ -54,9 +54,7 @@
           </div>
 
           <div class="hero__stage">
-            @defer (on idle) {
-              <app-hero-scene class="hero__scene" />
-            }
+            <app-hero-scene class="hero__scene" />
             <div class="hero__avatar-wrap">
               <img
                 class="hero__avatar"
@@ -66,6 +64,7 @@
                 height="200"
                 fetchpriority="high"
               />
+              <app-mascot class="hero__mascot" [size]="88" />
             </div>
           </div>
         }

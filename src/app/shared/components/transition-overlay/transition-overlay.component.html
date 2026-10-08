@@ -5,7 +5,10 @@
         <div class="lang">
           <div class="lang__card">
             @if (transition.flag(); as flag) {
-              <img class="lang__flag" [src]="flag" alt="" />
+              <div class="lang__tile">
+                <app-mascot class="lang__goat" [size]="92" />
+                <img class="lang__flag" [src]="flag" alt="" />
+              </div>
             }
             <span class="lang__name">{{ transition.label() }}</span>
           </div>

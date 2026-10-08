@@ -1,1 +1,54 @@
-<canvas #canvas class="theme-canvas" aria-hidden="true"></canvas>
+<div class="stage" [class.is-dark]="toDark()">
+  <!-- Sun: clay disc with soft rounded rays and a happy face -->
+  <svg class="orb orb--sun" viewBox="0 0 200 200" focusable="false">
+    <defs>
+      <radialGradient id="ts-sun" cx="36%" cy="28%" r="80%">
+        <stop offset="0" stop-color="#fff4c2" />
+        <stop offset="0.6" stop-color="#ffcf55" />
+        <stop offset="1" stop-color="#f0a52a" />
+      </radialGradient>
+      <linearGradient id="ts-ray" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#ffe083" />
+        <stop offset="1" stop-color="#f5b035" />
+      </linearGradient>
+    </defs>
+    <g class="sun__rays">
+      @for (k of rays; track k) {
+        <rect x="93" y="8" width="14" height="30" rx="7" fill="url(#ts-ray)" [attr.transform]="'rotate(' + k * 45 + ' 100 100)'" />
+      }
+    </g>
+    <circle cx="100" cy="100" r="54" fill="url(#ts-sun)" />
+    <ellipse cx="80" cy="72" rx="20" ry="9" fill="#fff" opacity="0.4" transform="rotate(-30 80 72)" />
+    <ellipse cx="84" cy="98" rx="4.5" ry="5.5" fill="#5a3a12" />
+    <ellipse cx="116" cy="98" rx="4.5" ry="5.5" fill="#5a3a12" />
+    <ellipse cx="70" cy="113" rx="7" ry="4.5" fill="#ff9a6b" opacity="0.6" />
+    <ellipse cx="130" cy="113" rx="7" ry="4.5" fill="#ff9a6b" opacity="0.6" />
+    <path d="M89 112 Q100 126 111 112" fill="none" stroke="#5a3a12" stroke-width="3.5" stroke-linecap="round" />
+  </svg>
+
+  <!-- Moon: sleepy clay crescent with twinkling clay stars -->
+  <svg class="orb orb--moon" viewBox="0 0 200 200" focusable="false">
+    <defs>
+      <radialGradient id="ts-moon" cx="30%" cy="28%" r="85%">
+        <stop offset="0" stop-color="#fffef6" />
+        <stop offset="0.6" stop-color="#f1e8c9" />
+        <stop offset="1" stop-color="#d4c79c" />
+      </radialGradient>
+      <mask id="ts-moon-mask">
+        <rect width="200" height="200" fill="#fff" />
+        <circle cx="138" cy="84" r="52" fill="#000" />
+      </mask>
+    </defs>
+    <circle cx="98" cy="102" r="60" fill="url(#ts-moon)" mask="url(#ts-moon-mask)" />
+    <ellipse cx="62" cy="68" rx="14" ry="7" fill="#fff" opacity="0.45" transform="rotate(-40 62 68)" />
+    <path d="M52 102 Q60 110 68 102" fill="none" stroke="#6b5d3a" stroke-width="3.5" stroke-linecap="round" />
+    <ellipse cx="56" cy="116" rx="6" ry="4" fill="#f2a19a" opacity="0.6" />
+    <path d="M60 124 Q66 129 72 124" fill="none" stroke="#6b5d3a" stroke-width="3" stroke-linecap="round" />
+    <path class="star star--a" d="M0-11 L3.5-3.5 11 0 3.5 3.5 0 11 -3.5 3.5 -11 0 -3.5-3.5Z" fill="#ffe58a" transform="translate(158 46)" />
+    <path class="star star--b" d="M0-8 L2.6-2.6 8 0 2.6 2.6 0 8 -2.6 2.6 -8 0 -2.6-2.6Z" fill="#fff1b8" transform="translate(172 106)" />
+    <path class="star star--c" d="M0-7 L2.2-2.2 7 0 2.2 2.2 0 7 -2.2 2.2 -7 0 -2.2-2.2Z" fill="#ffe58a" transform="translate(132 22)" />
+  </svg>
+
+  <!-- Goat mascot hops in beside whichever body is rising -->
+  <app-mascot class="goat" [size]="116" />
+</div>

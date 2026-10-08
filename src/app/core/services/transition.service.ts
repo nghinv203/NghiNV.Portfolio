@@ -11,8 +11,9 @@ export interface TransitionConfig {
   label?: string;
 }
 
-const DURATION = 2000;
-const APPLY_AT = 900;
+const DURATION = 1500;
+// The wash fully covers the page at 30% (450ms); swap just after.
+const APPLY_AT = 600;
 
 /**
  * Drives the full-screen scene transitions used when switching theme or

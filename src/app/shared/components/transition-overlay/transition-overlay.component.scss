@@ -1,6 +1,8 @@
-// Full-screen cinematic overlay for theme / language switches.
+// Full-screen clay "wash" for theme / language switches: a circle of the
+// target colour swells from the centre, holds while the swap happens unseen,
+// then contracts to reveal the new page.
 // $dur must match TransitionService.DURATION.
-$dur: 2s;
+$dur: 1500ms;
 
 .scene {
   position: fixed;
@@ -8,34 +10,46 @@ $dur: 2s;
   z-index: 5000;
   overflow: hidden;
   pointer-events: auto;
-  animation: scene-fade $dur ease forwards;
+  background-color: var(--wash, var(--color-bg));
+  animation: wash $dur cubic-bezier(0.65, 0, 0.35, 1) forwards;
+
+  &[data-kind='theme-to-dark'] {
+    --wash: #0e1c14;
+  }
+
+  &[data-kind='theme-to-light'] {
+    --wash: #e6f3df;
+  }
+
+  &[data-kind='language'] {
+    --wash: var(--color-bg);
+  }
 }
 
-// Opaque almost immediately (hides the swap), clears at the end (reveals it).
-@keyframes scene-fade {
+// 75% of the reference radius comfortably covers the screen corners.
+@keyframes wash {
   0% {
-    opacity: 0;
+    clip-path: circle(0% at 50% 50%);
   }
-  7% {
-    opacity: 1;
+  30% {
+    clip-path: circle(75% at 50% 50%);
   }
-  85% {
-    opacity: 1;
+  72% {
+    clip-path: circle(75% at 50% 50%);
   }
   100% {
-    opacity: 0;
+    clip-path: circle(0% at 50% 50%);
   }
 }
 
 // ─────────────────────────────────────────────────────────────
-// LANGUAGE SCENE — flag + autonym reveal
+// LANGUAGE SCENE — flag on a clay tile + autonym
 // ─────────────────────────────────────────────────────────────
 .lang {
   position: absolute;
   inset: 0;
   display: grid;
   place-items: center;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
 }
 
 .lang__card {
@@ -43,38 +57,61 @@ $dur: 2s;
   flex-direction: column;
   align-items: center;
   gap: var(--space-5);
-  color: #fff;
-  animation: lang-pop $dur ease forwards;
+  animation: lang-pop $dur cubic-bezier(0.3, 1.2, 0.5, 1) both;
+}
+
+.lang__tile {
+  position: relative;
+}
+
+// The goat peeks over the top edge of the tile; the tile hides its chin.
+.lang__goat {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% - 30px);
+  margin-left: -46px;
+  z-index: 0;
 }
 
 .lang__flag {
-  width: clamp(84px, 18vmin, 140px);
+  position: relative;
+  z-index: 1;
+  width: clamp(96px, 20vmin, 150px);
   height: auto;
-  border-radius: 10px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  padding: var(--space-3);
+  box-sizing: content-box;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-3d);
 }
 
 .lang__name {
   font-size: clamp(1.75rem, 6vw, 2.75rem);
-  font-weight: var(--weight-bold);
+  font-weight: 800;
   letter-spacing: 0.01em;
+  color: var(--color-text);
 }
 
 @keyframes lang-pop {
-  0% {
-    transform: scale(0.6) translateY(10px);
+  0%,
+  22% {
     opacity: 0;
+    transform: translateY(30px) scale(0.6, 0.6);
   }
-  24% {
-    transform: scale(1) translateY(0);
+  38% {
     opacity: 1;
+    transform: translateY(-8px) scale(0.94, 1.08);
   }
-  78% {
-    transform: scale(1) translateY(0);
+  48% {
+    transform: translateY(0) scale(1.04, 0.97);
+  }
+  56%,
+  72% {
     opacity: 1;
+    transform: translateY(0) scale(1);
   }
   100% {
-    transform: scale(1.12) translateY(-6px);
     opacity: 0;
+    transform: scale(0.8);
   }
 }
